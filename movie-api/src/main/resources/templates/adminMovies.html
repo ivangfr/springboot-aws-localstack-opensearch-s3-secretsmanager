@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies-Api</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+
+<body>
+
+<main>
+    <header>
+        <nav>
+            <div class="ui stackable large menu">
+                <a th:href="@{/admin/movies/search}" class="header item">Movies-Api (Admin)</a>
+                <div class="item">
+                    <form th:action="@{/admin/movies/search}" th:object="${searchRequest}" method="post">
+                        <div class="ui action input">
+                            <input type="text" autocomplete="off" th:field="*{text}">
+                            <button class="ui teal icon button" type="submit">
+                                <i class="search icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="ui container">
+        <div class="ui floating positive message" th:if="${message}">
+            <i class="close icon"></i>
+            <div class="header" th:text="${message}"></div>
+        </div>
+        <div class="ui floating negative message" th:if="${error}">
+            <i class="close icon"></i>
+            <div class="header" th:text="${error}"></div>
+        </div>
+
+        <div class="ui five stackable doubling centered link cards" th:if="${omdbResponse} == null" style="margin-top:10px">
+            <a class="ui centered card" th:each="movie:${movies}" th:href="@{/admin/movies/{imdb}(imdb=${movie.imdb})}">
+                <div class="image">
+                    <img th:src="@{${movie.poster}}">
+                </div>
+                <div class="content">
+                    <div class="ui header" th:text="${movie.title}">Title</div>
+                </div>
+            </a>
+        </div>
+
+        <div class="ui grid" th:if="${omdbResponse} != null" style="margin-top:10px">
+            <div class="six wide column">
+                <img class="ui image" th:src="@{${omdbResponse.posterUrl}}">
+            </div>
+            <div class="ten wide column">
+                <div class="ui large relaxed list">
+                    <div class="item">
+                        <div class="ui horizontal label">Imdb</div>
+                        <span th:text="${omdbResponse.imdb}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Title</div>
+                        <span th:text="${omdbResponse.title}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Year</div>
+                        <span th:text="${omdbResponse.year}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Released</div>
+                        <span th:text="${omdbResponse.released}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Imdb Rating</div>
+                        <span th:text="${omdbResponse.imdbRating}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Genre</div>
+                        <span th:text="${omdbResponse.genre}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Runtime</div>
+                        <span th:text="${omdbResponse.runtime}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Director</div>
+                        <span th:text="${omdbResponse.director}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Writer</div>
+                        <span th:text="${omdbResponse.writer}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Actors</div>
+                        <span th:text="${omdbResponse.actors}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Plot</div>
+                        <span th:text="${omdbResponse.plot}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Language</div>
+                        <span th:text="${omdbResponse.language}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Country</div>
+                        <span th:text="${omdbResponse.country}"></span>
+                    </div>
+                    <div class="item">
+                        <div class="ui horizontal label">Awards</div>
+                        <span th:text="${omdbResponse.awards}"></span>
+                    </div>
+                    <form th:action="@{/admin/movies}" th:object="${addOmdbResponse}" method="post">
+                        <input type="hidden" th:value="${omdbResponse.imdb}" th:field="*{imdb}"/>
+                        <input type="hidden" th:value="${omdbResponse.title}" th:field="*{title}"/>
+                        <input type="hidden" th:value="${omdbResponse.posterUrl}" th:field="*{posterUrl}"/>
+                        <input type="hidden" th:value="${omdbResponse.year}" th:field="*{year}"/>
+                        <input type="hidden" th:value="${omdbResponse.released}" th:field="*{released}"/>
+                        <input type="hidden" th:value="${omdbResponse.imdbRating}" th:field="*{imdbRating}"/>
+                        <input type="hidden" th:value="${omdbResponse.genre}" th:field="*{genre}"/>
+                        <input type="hidden" th:value="${omdbResponse.runtime}" th:field="*{runtime}"/>
+                        <input type="hidden" th:value="${omdbResponse.director}" th:field="*{director}"/>
+                        <input type="hidden" th:value="${omdbResponse.writer}" th:field="*{writer}"/>
+                        <input type="hidden" th:value="${omdbResponse.actors}" th:field="*{actors}"/>
+                        <input type="hidden" th:value="${omdbResponse.plot}" th:field="*{plot}"/>
+                        <input type="hidden" th:value="${omdbResponse.language}" th:field="*{language}"/>
+                        <input type="hidden" th:value="${omdbResponse.country}" th:field="*{country}"/>
+                        <input type="hidden" th:value="${omdbResponse.awards}" th:field="*{awards}"/>
+                        <div class="ui fluid buttons">
+                            <button class="ui positive button" type="submit" th:name="action" th:value="add">Add</button>
+                            <div class="or"></div>
+                            <button class="ui button" type="submit" th:name="action" th:value="cancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="/app.js"></script>
+
+</body>
+</html>

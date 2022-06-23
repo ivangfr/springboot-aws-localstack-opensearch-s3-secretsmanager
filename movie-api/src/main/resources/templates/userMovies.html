@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies-Api</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
+
+<body>
+
+<main>
+    <header>
+        <nav>
+            <div class="ui stackable large menu">
+                <a th:href="@{/user/movies}" class="header item">Movies-Api</a>
+                <div class="item">
+                    <form th:action="@{/user/movies/search}" th:object="${searchRequest}" method="post">
+                        <div class="ui action input">
+                            <input type="text" autocomplete="off" th:field="*{text}">
+                            <button class="ui teal icon button" type="submit">
+                                <i class="search icon"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="ui container">
+        <div class="ui floating positive message" th:if="${message}">
+            <i class="close icon"></i>
+            <div class="header" th:text="${message}"></div>
+        </div>
+        <div class="ui floating negative message" th:if="${error}">
+            <i class="close icon"></i>
+            <div class="header" th:text="${error}"></div>
+        </div>
+
+        <div class="ui five stackable doubling centered link cards" style="margin-top:10px">
+            <a class="ui centered card" th:each="movie:${movies}" th:href="@{/user/movies/{imdb}(imdb=${movie.imdb})}">
+                <div class="image">
+                    <img th:src="@{${movie.poster}}">
+                </div>
+                <div class="content">
+                    <div class="ui header" th:text="${movie.title}">Title</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="/app.js"></script>
+
+</body>
+</html>
