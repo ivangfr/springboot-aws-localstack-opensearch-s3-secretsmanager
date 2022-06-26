@@ -9,41 +9,33 @@
 <body>
 
 <main>
-    <header>
-        <nav>
-            <div class="ui stackable large menu">
-                <a th:href="@{/user/movies}" class="header item">Movies-Api</a>
-                <div class="item">
-                    <form th:action="@{/user/movies/search}" th:object="${searchRequest}" method="post">
-                        <div class="ui action input">
-                            <input type="text" autocomplete="off" th:field="*{text}">
-                            <button class="ui teal icon button" type="submit">
-                                <i class="search icon"></i>
-                            </button>
-                        </div>
-                    </form>
+    <div class="ui stackable massive menu">
+        <a th:href="@{/user/movies}" class="header item">Movies-Api</a>
+        <form th:action="@{/user/movies/search}" th:object="${searchRequest}" method="post">
+            <div class="ui category search item">
+                <div class="ui icon input">
+                    <input class="prompt" type="text" autocomplete="off" th:field="*{text}" placeholder="Search a movie...">
+                    <i class="search icon"></i>
                 </div>
             </div>
-        </nav>
-    </header>
+        </form>
+    </div>
+
+    <div class="ui floating positive message" th:if="${message}" style="cursor:pointer">
+        <div class="ui center aligned header" th:text="${message}"></div>
+    </div>
+    <div class="ui floating negative message" th:if="${error}" style="cursor:pointer">
+        <div class="ui center aligned header" th:text="${error}"></div>
+    </div>
 
     <div class="ui container">
-        <div class="ui floating positive message" th:if="${message}">
-            <i class="close icon"></i>
-            <div class="header" th:text="${message}"></div>
-        </div>
-        <div class="ui floating negative message" th:if="${error}">
-            <i class="close icon"></i>
-            <div class="header" th:text="${error}"></div>
-        </div>
-
-        <div class="ui five stackable doubling centered link cards" style="margin-top:10px">
+        <div class="ui four stackable doubling centered link cards" style="margin-top:10px">
             <a class="ui centered card" th:each="movie:${movies}" th:href="@{/user/movies/{imdb}(imdb=${movie.imdb})}">
                 <div class="image">
                     <img th:src="@{${movie.poster}}">
                 </div>
                 <div class="content">
-                    <div class="ui header" th:text="${movie.title}">Title</div>
+                    <div class="ui center aligned header" th:text="${movie.title}">Title</div>
                 </div>
             </a>
         </div>

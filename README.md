@@ -14,13 +14,16 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
   The information of the movies, such as `imdb`, `title`, `year`, etc, are stored in `OpenSearch` that is hosted in `LocalStack`. The `poster` of the movies are stored in `S3` buckets.
 
-  The `movie-api` admin has access to [`OMDb API`](https://www.omdbapi.com/) to find and add easily new movies. In order to make request to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
+  The `movie-api` admin has access to [`OMDb API`](https://www.omdbapi.com/) to search and add easily new movies. In order to make request to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
 
 ## Prerequisites
 
 - [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
+- [`OMDb API`](https://www.omdbapi.com/) KEY
+
+  To search movies in `OMDb API` and add them, we need to obtain an API KEY from `OMDb API`. In order to do it, access https://www.omdbapi.com/apikey.aspx and follow the steps provided by the website.
 
 ## Start and Initialize LocalStack
 
@@ -31,11 +34,14 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
   DEBUG=1 docker-compose up -d
   ```
 
-- Initialize LocalStack
+- Initialize `LocalStack`
   ```
   ./init-localstack.sh <OMDB_API_KEY>
   ```
-  In the script, a domain for `OpenSearch` will be created as well as the `movies` index using the `movies-mapping.json` provided
+  The script requires as argument `OMDB_API_KEY`. The script will create:
+  - a domain for `OpenSearch` will be created as well as the `movies` index using the `movies-mapping.json` provided;
+  - the `S3` bucket `com.mycompany.movieapi.posters`;
+  - a secret for `OMDB_API_KEY`.
 
 ## Running application with Maven
 
@@ -65,11 +71,11 @@ In a terminal and, inside `springboot-aws-localstack` root folder, run the follo
 
 ## Application URL
 
-| Application | Type       | URL                                         |
-|-------------|------------|---------------------------------------------|
-| `movie-api` | Swagger    | http://localhost:8080/swagger-ui/index.html |
-| `movie-api` | UI (admin) | http://localhost:8080/admin/movies          |
-| `movie-api` | UI (user)  | http://localhost:8080/user/movies           |
+| Application | Type       | URL                                         | Screenshot                              |
+|-------------|------------|---------------------------------------------|-----------------------------------------|
+| `movie-api` | Swagger    | http://localhost:8080/swagger-ui/index.html | ![swagger](documentation/swagger.jpeg)  |
+| `movie-api` | UI (admin) | http://localhost:8080/admin/movies          | ![swagger](documentation/ui-admin.jpeg) |
+| `movie-api` | UI (user)  | http://localhost:8080/user/movies           | ![swagger](documentation/ui-user.jpeg)  |
 
 ## Useful Links
 

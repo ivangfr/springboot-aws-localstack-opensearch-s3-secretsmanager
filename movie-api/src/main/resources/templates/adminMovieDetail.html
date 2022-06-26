@@ -9,82 +9,87 @@
 <body>
 
 <main>
-    <header>
-        <nav>
-            <div class="ui stackable large menu">
-                <a th:href="@{/admin/movies}" class="header item">< Back</a>
-            </div>
-        </nav>
-    </header>
+    <div class="ui stackable menu">
+        <a th:href="@{/admin/movies}" class="header item">< Back</a>
+    </div>
 
     <div class="ui container">
         <div class="ui two column grid" style="margin-top:10px">
-            <div class="six wide column">
+            <div class="five wide column">
                 <img class="ui centered image" th:src="@{${movie.poster}}">
-                <form class="ui form" th:action="@{/admin/movies/{imdb}/uploadPoster(imdb=${movie.imdb})}" method="post" enctype="multipart/form-data">
-                    <div class="inline field">
-                        <label>Poster</label>
-                        <input type="file" name="file">
-                    </div>
-                    <button class="ui blue fluid button" type="submit">Upload</button>
-                </form>
             </div>
-            <div class="ten wide column">
+            <div class="eleven wide column">
                 <div class="ui large segment">
-                    <form class="ui form" th:action="@{/admin/movies}" th:object="${movie}" th:method="put">
-                        <div class="two fields">
+                    <form class="ui form" th:action="@{/admin/movies}" th:object="${movie}" th:method="put" enctype="multipart/form-data">
+                        <div class="three fields">
                             <div class="required field">
                                 <label>Imdb</label>
-                                <input type="text" readonly="" th:value="${movie.imdb}" th:field="*{imdb}">
+                                <input type="text" readonly="" th:field="*{imdb}">
                             </div>
                             <div class="required field">
                                 <label>Title</label>
-                                <input type="text" th:value="${movie.title}" th:field="*{title}">
+                                <input type="text" th:field="*{title}">
                             </div>
+                            <div class="field">
+                                <label>Year</label>
+                                <input type="number" th:field="*{year}">
+                            </div>
+                        </div>
+                        <div class="ui divider"></div>
+                        <div class="field">
+                            <label>Poster File</label>
+                            <input type="file" name="posterFile">
                         </div>
                         <div class="field">
                             <label>Poster URL</label>
-                            <input type="text" readonly="" th:value="${movie.poster}" th:field="*{poster}">
+                            <input type="text" readonly="" th:field="*{poster}">
                         </div>
-                        <div class="four fields">
-                            <div class="field">
-                                <label>Year</label>
-                                <input type="number" th:value="${movie.year}" th:field="*{year}">
-                            </div>
+                        <div class="ui divider"></div>
+                        <div class="three fields">
                             <div class="field">
                                 <label>Released</label>
-                                <input type="text" th:value="${movie.released}" th:field="*{released}">
+                                <input type="text" th:field="*{released}">
                             </div>
                             <div class="field">
                                 <label>Imdb Rating</label>
-                                <input type="number" step="0.1" th:value="${movie.imdbRating}" th:field="*{imdbRating}">
+                                <input type="number" step="0.1" th:field="*{imdbRating}">
                             </div>
                             <div class="field">
                                 <label>Runtime</label>
-                                <input type="text" th:value="${movie.runtime}" th:field="*{runtime}">
+                                <input type="text" th:field="*{runtime}">
                             </div>
                         </div>
                         <div class="two fields">
                             <div class="field">
                                 <label>Director</label>
-                                <input type="text" th:value="${movie.director}" th:field="*{director}">
+                                <input type="text" th:field="*{director}">
                             </div>
                             <div class="field">
                                 <label>Writer</label>
-                                <input type="text" th:value="${movie.writer}" th:field="*{writer}">
+                                <input type="text" th:field="*{writer}">
                             </div>
                         </div>
                         <div class="field">
                             <label>Actors</label>
-                            <input type="text" th:value="${movie.actors}" th:field="*{actors}">
+                            <input type="text" th:field="*{actors}">
                         </div>
                         <div class="field">
                             <label>Plot</label>
-                            <textarea type="text" rows="3" th:value="${movie.plot}" th:field="*{plot}"></textarea>
+                            <textarea type="text" rows="3" th:field="*{plot}"></textarea>
                         </div>
-                        <div class="field">
-                            <label>Awards</label>
-                            <input type="text" th:value="${movie.awards}" th:field="*{awards}">
+                        <div class="three fields">
+                            <div class="field">
+                                <label>Awards</label>
+                                <input type="text" th:field="*{awards}">
+                            </div>
+                            <div class="field">
+                                <label>Country</label>
+                                <input type="text" th:field="*{country}">
+                            </div>
+                            <div class="field">
+                                <label>Language</label>
+                                <input type="text" th:field="*{language}">
+                            </div>
                         </div>
                         <button class="ui blue fluid button" type="submit">Save</button>
                     </form>

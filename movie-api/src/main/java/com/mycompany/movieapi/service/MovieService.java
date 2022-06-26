@@ -13,5 +13,5 @@ public interface MovieService {
 
     SearchMovieResponse searchMovies(String title);
 
-    String saveMovie(Map<String, Object> source);
+    String saveMovie(Map<String, Object> movieMap);
 }

@@ -9,41 +9,35 @@
 <body>
 
 <main>
-    <header>
-        <nav>
-            <div class="ui stackable large menu">
-                <a th:href="@{/admin/movies/search}" class="header item">Movies-Api (Admin)</a>
-                <div class="item">
-                    <form th:action="@{/admin/movies/search}" th:object="${searchRequest}" method="post">
-                        <div class="ui action input">
-                            <input type="text" autocomplete="off" th:field="*{text}">
-                            <button class="ui teal icon button" type="submit">
-                                <i class="search icon"></i>
-                            </button>
-                        </div>
-                    </form>
+    <div class="ui stackable massive menu">
+        <a class="header item">Movies-Api</a>
+        <!--TODO add movie field-by-field-->
+        <!--<a class="item">Add Movie</a>-->
+        <form th:action="@{/admin/movies/search}" th:object="${searchRequest}" method="post">
+            <div class="ui category search item">
+                <div class="ui icon input">
+                    <input class="prompt" type="text" autocomplete="off" th:field="*{text}" placeholder="Search in OMDb API...">
+                    <i class="search icon"></i>
                 </div>
             </div>
-        </nav>
-    </header>
+        </form>
+    </div>
+
+    <div class="ui floating positive message" th:if="${message}" style="cursor:pointer">
+        <div class="ui center aligned header" th:text="${message}"></div>
+    </div>
+    <div class="ui floating negative message" th:if="${error}" style="cursor:pointer">
+        <div class="ui center aligned header" th:text="${error}"></div>
+    </div>
 
     <div class="ui container">
-        <div class="ui floating positive message" th:if="${message}">
-            <i class="close icon"></i>
-            <div class="header" th:text="${message}"></div>
-        </div>
-        <div class="ui floating negative message" th:if="${error}">
-            <i class="close icon"></i>
-            <div class="header" th:text="${error}"></div>
-        </div>
-
         <div class="ui five stackable doubling centered link cards" th:if="${omdbResponse} == null" style="margin-top:10px">
             <a class="ui centered card" th:each="movie:${movies}" th:href="@{/admin/movies/{imdb}(imdb=${movie.imdb})}">
                 <div class="image">
                     <img th:src="@{${movie.poster}}">
                 </div>
                 <div class="content">
-                    <div class="ui header" th:text="${movie.title}">Title</div>
+                    <div class="ui center aligned header" th:text="${movie.title}">Title</div>
                 </div>
             </a>
         </div>
@@ -111,21 +105,21 @@
                         <span th:text="${omdbResponse.awards}"></span>
                     </div>
                     <form th:action="@{/admin/movies}" th:object="${addOmdbResponse}" method="post">
-                        <input type="hidden" th:value="${omdbResponse.imdb}" th:field="*{imdb}"/>
-                        <input type="hidden" th:value="${omdbResponse.title}" th:field="*{title}"/>
-                        <input type="hidden" th:value="${omdbResponse.posterUrl}" th:field="*{posterUrl}"/>
-                        <input type="hidden" th:value="${omdbResponse.year}" th:field="*{year}"/>
-                        <input type="hidden" th:value="${omdbResponse.released}" th:field="*{released}"/>
-                        <input type="hidden" th:value="${omdbResponse.imdbRating}" th:field="*{imdbRating}"/>
-                        <input type="hidden" th:value="${omdbResponse.genre}" th:field="*{genre}"/>
-                        <input type="hidden" th:value="${omdbResponse.runtime}" th:field="*{runtime}"/>
-                        <input type="hidden" th:value="${omdbResponse.director}" th:field="*{director}"/>
-                        <input type="hidden" th:value="${omdbResponse.writer}" th:field="*{writer}"/>
-                        <input type="hidden" th:value="${omdbResponse.actors}" th:field="*{actors}"/>
-                        <input type="hidden" th:value="${omdbResponse.plot}" th:field="*{plot}"/>
-                        <input type="hidden" th:value="${omdbResponse.language}" th:field="*{language}"/>
-                        <input type="hidden" th:value="${omdbResponse.country}" th:field="*{country}"/>
-                        <input type="hidden" th:value="${omdbResponse.awards}" th:field="*{awards}"/>
+                        <input type="hidden" th:field="*{imdb}"/>
+                        <input type="hidden" th:field="*{title}"/>
+                        <input type="hidden" th:field="*{posterUrl}"/>
+                        <input type="hidden" th:field="*{year}"/>
+                        <input type="hidden" th:field="*{released}"/>
+                        <input type="hidden" th:field="*{imdbRating}"/>
+                        <input type="hidden" th:field="*{genre}"/>
+                        <input type="hidden" th:field="*{runtime}"/>
+                        <input type="hidden" th:field="*{director}"/>
+                        <input type="hidden" th:field="*{writer}"/>
+                        <input type="hidden" th:field="*{actors}"/>
+                        <input type="hidden" th:field="*{plot}"/>
+                        <input type="hidden" th:field="*{language}"/>
+                        <input type="hidden" th:field="*{country}"/>
+                        <input type="hidden" th:field="*{awards}"/>
                         <div class="ui fluid buttons">
                             <button class="ui positive button" type="submit" th:name="action" th:value="add">Add</button>
                             <div class="or"></div>

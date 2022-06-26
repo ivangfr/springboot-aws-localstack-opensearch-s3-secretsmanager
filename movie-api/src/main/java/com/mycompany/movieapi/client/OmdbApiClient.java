@@ -16,27 +16,9 @@ public class OmdbApiClient {
     private final OmdbApiProperties omdbApiProperties;
     private final SecretsManagerService secretsManagerService;
 
-    public OmdbResponse getMovieByImdb(String imdb) {
-        try {
-            String url = String.format("%s/?apikey=%s&i=%s",
-                    omdbApiProperties.getUrl(), secretsManagerService.getSecret("omdbApiKey"), imdb);
-            return restTemplate.getForEntity(url, OmdbResponse.class).getBody();
-        } catch (Exception e) {
-            log.error("Unable to get information about the movie with imdb '{}' due to the following exception: {}", imdb, e.getMessage());
-            return MOVIE_INFO_EMPTY;
-        }
-    }
-
     public OmdbResponse getMovieByTitle(String title) {
-        try {
-            String url = String.format("%s/?apikey=%s&t=%s",
-                    omdbApiProperties.getUrl(), secretsManagerService.getSecret("omdbApiKey"), title);
-            return restTemplate.getForEntity(url, OmdbResponse.class).getBody();
-        } catch (Exception e) {
-            log.error("Unable to get information about the movie with title '{}' due to the following exception: {}", title, e.getMessage());
-            return MOVIE_INFO_EMPTY;
-        }
+        String url = String.format("%s/?apikey=%s&t=%s",
+                omdbApiProperties.getUrl(), secretsManagerService.getSecret("omdbApiKey"), title);
+        return restTemplate.getForEntity(url, OmdbResponse.class).getBody();
     }
-
-    private static final OmdbResponse MOVIE_INFO_EMPTY = new OmdbResponse("False");
 }

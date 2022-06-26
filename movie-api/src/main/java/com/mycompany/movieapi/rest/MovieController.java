@@ -4,6 +4,7 @@ import com.mycompany.movieapi.mapper.MovieMapper;
 import com.mycompany.movieapi.service.MovieService;
 import com.mycompany.movieapi.service.PosterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,15 +33,15 @@ public class MovieController {
 
     @PostMapping
     public String addMovie(@Valid @RequestBody AddMovieRequest addMovieRequest) {
-        return movieService.saveMovie(movieMapper.toSource(addMovieRequest));
+        return movieService.saveMovie(movieMapper.toMovieMap(addMovieRequest));
     }
 
-    @PostMapping(value = "/{imdb}/uploadPoster", consumes = "multipart/form-data")
+    @PostMapping(value = "/{imdb}/uploadPoster", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String uploadPoster(@PathVariable String imdb, @RequestParam("poster") MultipartFile poster) {
-        Map<String, Object> movie = movieService.validateAndGetMovie(imdb);
-        String uploadFile = posterService.uploadFile(poster, imdb);
-        movie.put("poster", uploadFile);
-        movieService.saveMovie(movie);
-        return uploadFile;
+        Map<String, Object> movieMap = movieService.validateAndGetMovie(imdb);
+        String uploadedFile = posterService.uploadFile(poster);
+        movieMap.put("poster", uploadedFile);
+        movieService.saveMovie(movieMap);
+        return uploadedFile;
     }
 }

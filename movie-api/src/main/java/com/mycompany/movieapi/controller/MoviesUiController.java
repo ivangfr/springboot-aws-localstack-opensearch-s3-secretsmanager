@@ -51,11 +51,11 @@ public class MoviesUiController {
 
     @GetMapping("/user/movies/{imdb}")
     public String getUserMovie(@PathVariable String imdb, Model model) {
-        Optional<Map<String, Object>> sourceOptional = movieService.getMovie(imdb);
-        if (sourceOptional.isEmpty()) {
+        Optional<Map<String, Object>> movieMapOptional = movieService.getMovie(imdb);
+        if (movieMapOptional.isEmpty()) {
             return "redirect:/user/movies";
         }
-        model.addAttribute("movie", movieMapper.toMovie(sourceOptional.get()));
+        model.addAttribute("movie", movieMapper.toMovie(movieMapOptional.get()));
         return "userMovieDetail";
     }
 
@@ -69,7 +69,7 @@ public class MoviesUiController {
         SearchMovieResponse searchMovieResponse = movieService.searchMovies(searchRequest.getText());
         if (searchMovieResponse.getHits().size() == 0) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("No movie with title containing '%s' found!", searchRequest.getText()));
+                    String.format("No movies with title containing '%s' were found!", searchRequest.getText()));
             return "redirect:/user/movies";
         }
         model.addAttribute("movies", getMovieList(searchMovieResponse));
@@ -91,11 +91,11 @@ public class MoviesUiController {
 
     @GetMapping("/admin/movies/{imdb}")
     public String getAdminMovie(@PathVariable String imdb, Model model) {
-        Optional<Map<String, Object>> sourceOptional = movieService.getMovie(imdb);
-        if (sourceOptional.isEmpty()) {
+        Optional<Map<String, Object>> movieMapOptional = movieService.getMovie(imdb);
+        if (movieMapOptional.isEmpty()) {
             return "redirect:/admin/movies";
         }
-        model.addAttribute("movie", movieMapper.toMovie(sourceOptional.get()));
+        model.addAttribute("movie", movieMapper.toMovie(movieMapOptional.get()));
         return "adminMovieDetail";
     }
 
@@ -106,10 +106,18 @@ public class MoviesUiController {
         if (!StringUtils.hasText(searchRequest.getText())) {
             return "redirect:/admin/movies";
         }
-        OmdbResponse omdbResponse = omdbApiClient.getMovieByTitle(searchRequest.getText());
+        OmdbResponse omdbResponse;
+        try {
+            omdbResponse = omdbApiClient.getMovieByTitle(searchRequest.getText());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error",
+                    String.format("An error occurred while searching for title containing '%s' in OMDb API! Error message: %s",
+                            searchRequest.getText(), e.getMessage()));
+            return "redirect:/admin/movies";
+        }
         if ("False".equals(omdbResponse.getResponse())) {
             redirectAttributes.addFlashAttribute("error",
-                    String.format("No movie with title containing '%s' found!", searchRequest.getText()));
+                    String.format("No movies with title containing '%s' were found!", searchRequest.getText()));
             return "redirect:/admin/movies";
         }
         model.addAttribute("omdbResponse", omdbResponse);
@@ -118,11 +126,15 @@ public class MoviesUiController {
     }
 
     @PutMapping("/admin/movies")
-    public String putAdminMovie(@ModelAttribute("movie") Movie movie,
+    public String putAdminMovie(@RequestParam MultipartFile posterFile,
+                                @ModelAttribute Movie movie,
                                 RedirectAttributes redirectAttributes) {
-        Map<String, Object> source = movieMapper.toSource(movie);
+        Map<String, Object> movieMap = movieMapper.toMovieMap(movie);
         try {
-            movieService.saveMovie(source);
+            if (!posterFile.isEmpty()) {
+                movieMap.put("poster", posterService.uploadFile(posterFile));
+            }
+            movieService.saveMovie(movieMap);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Movie '%s' updated successfully! Refresh the page in case it's not showing the updated version.", movie.getTitle()));
         } catch (Exception e) {
@@ -139,40 +151,14 @@ public class MoviesUiController {
         if ("cancel".equals(action)) {
             return "redirect:/admin/movies";
         }
-        Map<String, Object> source = movieMapper.toSource(addOmdbResponse);
+        Map<String, Object> movieMap = movieMapper.toMovieMap(addOmdbResponse);
         try {
-            movieService.saveMovie(source);
+            movieService.saveMovie(movieMap);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Movie '%s' added successfully! Refresh the page in case it's not showing.", addOmdbResponse.getTitle()));
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error",
                     String.format("An error occurred while adding movie '%s'!", addOmdbResponse.getTitle()));
-        }
-        return "redirect:/admin/movies";
-    }
-
-    @PostMapping("/admin/movies/{imdb}/uploadPoster")
-    public String uploadAdminMoviePoster(@RequestParam MultipartFile file,
-                                         @PathVariable String imdb,
-                                         RedirectAttributes redirectAttributes) {
-        if (file.isEmpty()) {
-            return "redirect:/admin/movies";
-        }
-        Optional<Map<String, Object>> sourceOptional = movieService.getMovie(imdb);
-        if (sourceOptional.isEmpty()) {
-            return "redirect:/admin/movies";
-        }
-        Map<String, Object> source = sourceOptional.get();
-        String title = String.valueOf(source.get("title"));
-        try {
-            String uploadFileUrl = posterService.uploadFile(file, String.valueOf(source.get("imdb")));
-            source.put("poster", uploadFileUrl);
-            movieService.saveMovie(source);
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("The poster of the movie '%s' was uploaded successfully!", title));
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error",
-                    String.format("An error occurred while uploading the poster of the movie '%s'!", title));
         }
         return "redirect:/admin/movies";
     }

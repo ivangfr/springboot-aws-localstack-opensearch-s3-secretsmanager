@@ -58,9 +58,9 @@ public class PosterServiceImpl implements PosterService {
     }
 
     @Override
-    public String uploadFile(MultipartFile file, String imdb) {
+    public String uploadFile(MultipartFile file) {
         try {
-            return uploadFile(imdb + getFileExtension(file), file.getBytes());
+            return uploadFile(file.getOriginalFilename(), file.getBytes());
         } catch (IOException e) {
             String message = String.format("Unable to upload MultipartFile %s", file.getOriginalFilename());
             throw new PosterUploaderException(message, e);

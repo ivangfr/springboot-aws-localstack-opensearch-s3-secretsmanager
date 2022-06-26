@@ -79,41 +79,41 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public String saveMovie(Map<String, Object> source) {
+    public String saveMovie(Map<String, Object> movieMap) {
         try {
-            handlePoster(source);
+            handlePoster(movieMap);
             IndexRequest indexRequest = new IndexRequest(awsProperties.getOpensearch().getIndexes())
-                    .source(source, XContentType.JSON)
-                    .id(String.valueOf(source.get("imdb")));
+                    .source(movieMap, XContentType.JSON)
+                    .id(String.valueOf(movieMap.get("imdb")));
             IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-            log.info("Document for '{}' {} successfully in ES!", source, indexResponse.getResult());
+            log.info("Document for '{}' {} successfully in ES!", movieMap, indexResponse.getResult());
             return indexResponse.getId();
         } catch (Exception e) {
-            String errorMessage = String.format("An exception occurred while indexing '%s'. %s", source, e.getMessage());
+            String errorMessage = String.format("An exception occurred while indexing '%s'. %s", movieMap, e.getMessage());
             log.error(errorMessage);
             throw new MovieServiceException(errorMessage, e);
         }
     }
 
-    private void handlePoster(Map<String, Object> source) throws MalformedURLException {
+    private void handlePoster(Map<String, Object> movieMap) throws MalformedURLException {
         String poster = posterService.getPosterNotAvailableUrl();
-        if (source.containsKey("poster")) {
-            poster = String.valueOf(source.get("poster"));
-        } else if (source.containsKey("posterUrl")) {
-            Object posterUrlObj = source.get("posterUrl");
+        if (movieMap.containsKey("poster")) {
+            poster = String.valueOf(movieMap.get("poster"));
+        } else if (movieMap.containsKey("posterUrl")) {
+            Object posterUrlObj = movieMap.get("posterUrl");
             if ((posterUrlObj instanceof URL || posterUrlObj instanceof String)) {
                 URL posterUrl = posterUrlObj instanceof URL ?
                         (URL) posterUrlObj : validateAndGetUrl((String) posterUrlObj);
                 if (posterUrl != null) {
-                    String imdb = String.valueOf(source.get("imdb"));
+                    String imdb = String.valueOf(movieMap.get("imdb"));
                     Optional<String> filePathOptional = posterService.downloadFile(posterUrl, imdb);
                     poster = filePathOptional.isPresent() ?
                             posterService.uploadFile(new File(filePathOptional.get())) : posterService.getPosterNotAvailableUrl();
-                    source.remove("posterUrl");
+                    movieMap.remove("posterUrl");
                 }
             }
         }
-        source.put("poster", poster);
+        movieMap.put("poster", poster);
     }
 
     private URL validateAndGetUrl(String url) {

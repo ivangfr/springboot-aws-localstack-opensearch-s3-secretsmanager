@@ -12,7 +12,7 @@ public interface PosterService {
 
     Optional<String> downloadFile(URL fileUrl, String fileName);
 
-    String uploadFile(MultipartFile file, String imdb);
+    String uploadFile(MultipartFile file);
 
     String uploadFile(File file);
 }
