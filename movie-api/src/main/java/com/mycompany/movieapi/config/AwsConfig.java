@@ -19,7 +19,7 @@ public class AwsConfig {
     private final AwsProperties awsProperties;
 
     @Bean
-    S3Client s3Client() {
+    public S3Client s3Client() {
         return S3Client.builder()
                 .region(Region.of(awsProperties.getRegion()))
                 .endpointOverride(URI.create(awsProperties.getEndpoint()))
@@ -30,7 +30,7 @@ public class AwsConfig {
     }
 
     @Bean
-    SecretsManagerClient secretsManagerClient() {
+    public SecretsManagerClient secretsManagerClient() {
         return SecretsManagerClient.builder()
                 .region(Region.of(awsProperties.getRegion()))
                 .endpointOverride(URI.create(awsProperties.getEndpoint()))

@@ -15,17 +15,17 @@ public class SwaggerConfig {
     private String applicationName;
 
     @Bean
-    OpenAPI customOpenAPI() {
+    public OpenAPI customOpenAPI() {
         return new OpenAPI().components(new Components()).info(new Info().title(applicationName));
     }
 
     @Bean
-    GroupedOpenApi customApi() {
+    public GroupedOpenApi customApi() {
         return GroupedOpenApi.builder().group("api").pathsToMatch("/api/**").build();
     }
 
     @Bean
-    GroupedOpenApi actuatorApi() {
+    public GroupedOpenApi actuatorApi() {
         return GroupedOpenApi.builder().group("actuator").pathsToMatch("/actuator/**").build();
     }
 }
