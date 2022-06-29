@@ -11,8 +11,6 @@
 <main>
     <div class="ui stackable massive menu">
         <a class="header item">Movies-Api</a>
-        <!--TODO add movie field-by-field-->
-        <!--<a class="item">Add Movie</a>-->
         <form th:action="@{/admin/movies/search}" th:object="${searchRequest}" method="post">
             <div class="ui category search item">
                 <div class="ui icon input">

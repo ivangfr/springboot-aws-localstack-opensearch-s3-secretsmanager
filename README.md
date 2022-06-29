@@ -1,4 +1,4 @@
-# springboot-aws-localstack
+# springboot-aws-localstack-opensearch-s3-secretsmanager
 
 In this project, we are going to use [`LocalStack`](https://localstack.cloud/) to simulate locally, some services provided by [`AWS Cloud`](https://aws.amazon.com/) such as [`OpenSearch`](https://aws.amazon.com/opensearch-service/), [`S3`](https://aws.amazon.com/s3/), and [`Secrets Manager`](https://aws.amazon.com/secrets-manager/).
 
@@ -27,7 +27,7 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 ## Start and Initialize LocalStack
 
-- In a terminal, make sure you are in inside `springboot-aws-localstack` root folder
+- In a terminal, make sure you are in inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder
 
 - Start `LocalStack` Docker container
   ```
@@ -38,14 +38,14 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
   ```
   ./init-localstack.sh <OMDB_API_KEY>
   ```
-  The script requires as argument `OMDB_API_KEY`. The script will create:
+  The script requires `OMDB_API_KEY` as first and unique argument. The script will create:
   - a domain for `OpenSearch` will be created as well as the `movies` index using the `movies-mapping.json` provided;
   - the `S3` bucket `com.mycompany.movieapi.posters`;
   - a secret for `OMDB_API_KEY`.
 
 ## Running application with Maven
 
-In a terminal and, inside `springboot-aws-localstack` root folder, run the following command
+In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
 ```
 ./mvnw clean spring-boot:run --projects movie-api -Dspring-boot.run.jvmArguments="-Daws.accessKey=key -Daws.secretAccessKey=secret"
 ```
@@ -54,7 +54,7 @@ In a terminal and, inside `springboot-aws-localstack` root folder, run the follo
 
 - ### Build Docker image
 
-  In a terminal and, inside `springboot-aws-localstack` root folder, run the following script
+  In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following script
   ```
   ./docker-build.sh
   ```
@@ -65,7 +65,7 @@ In a terminal and, inside `springboot-aws-localstack` root folder, run the follo
   ```
   docker run --rm --name movie-api -p 8080:8080 \
     -e AWS_ACCESS_KEY=key -e AWS_SECRET_ACCESS_KEY=secret \
-    --network=springboot-aws-localstack_default \
+    --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
     ivanfranchin/movie-api:1.0.0
   ```
 
@@ -94,14 +94,14 @@ In a terminal and, inside `springboot-aws-localstack` root folder, run the follo
 ## Shutdown
 
 - To stop application, go to the terminal where it is running and press `Ctrl+C`
-- To stop and remove `docker-compose` containers, network and volumes, go to a terminal and, inside `springboot-aws-localstack` root folder, run the following command
+- To stop and remove `docker-compose` containers, network and volumes, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
   ```
   docker-compose down -v
   ```
 
 ## Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `springboot-aws-localstack` root folder, run the script below
+To remove the Docker images created by this project, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the script below
 ```
 ./remove-docker-images.sh
 ```

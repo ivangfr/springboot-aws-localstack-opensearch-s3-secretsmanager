@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.mycompany</groupId>
-    <artifactId>springboot-aws-localstack</artifactId>
+    <artifactId>springboot-aws-localstack-opensearch-s3-secretsmanager</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>springboot-aws-localstack</name>
+    <name>springboot-aws-localstack-opensearch-s3-secretsmanager</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

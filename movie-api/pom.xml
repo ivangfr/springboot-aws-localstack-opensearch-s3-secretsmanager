@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.mycompany</groupId>
-        <artifactId>springboot-aws-localstack</artifactId>
+        <artifactId>springboot-aws-localstack-opensearch-s3-secretsmanager</artifactId>
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
