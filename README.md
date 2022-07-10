@@ -59,7 +59,7 @@ In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanage
   ./docker-build.sh
   ```
 
-- ### Start Docker container
+- ### Run Docker container
 
   In a terminal, run the following command
   ```

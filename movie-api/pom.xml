@@ -43,7 +43,7 @@
             <version>${opensearch-client.version}</version>
         </dependency>
 
-        <!-- Aws S3 -->
+        <!-- AWS -->
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
