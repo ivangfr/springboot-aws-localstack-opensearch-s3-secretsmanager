@@ -1,17 +1,20 @@
 package com.mycompany.movieapi.service;
 
-import com.mycompany.movieapi.rest.SearchMovieResponse;
+import com.mycompany.movieapi.model.Movie;
+import com.mycompany.movieapi.rest.SearchResponse;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 public interface MovieService {
 
-    Optional<Map<String, Object>> getMovie(String imdb);
+    Optional<Movie> getMovie(String imdb);
 
-    Map<String, Object> validateAndGetMovie(String imdb);
+    List<Movie> getMovies();
 
-    SearchMovieResponse searchMovies(String title);
+    Movie validateAndGetMovie(String imdb);
 
-    String saveMovie(Map<String, Object> movieMap);
+    SearchResponse searchMovies(String title);
+
+    Movie saveMovie(Movie movie);
 }

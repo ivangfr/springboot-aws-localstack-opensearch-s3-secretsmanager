@@ -6,15 +6,19 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 ![project-diagram](documentation/project-diagram.png)
 
-## Application
+## Applications
 
 - ### movie-api
 
-  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Java Web application that exposes a REST API and provides a UI for indexing and searching movies.
+  [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Java Web application that exposes a REST API and provides a UI for indexing movies.
 
-  The information of the movies, such as `imdb`, `title`, `year`, etc, are stored in `OpenSearch` that is hosted in `LocalStack`. The `poster` of the movies are stored in `S3` buckets.
+  The information of the movies, such as `imdb`, `title`, `year`, etc, are stored in `OpenSearch` that is hosted in `LocalStack`. The movie's `poster` are stored in `S3` buckets.
 
-  The `movie-api` admin has access to [`OMDb API`](https://www.omdbapi.com/) to search and add easily new movies. In order to make request to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
+  The `movie-api` has access to [`OMDb API`](https://www.omdbapi.com/) to search and add easily new movies. In order to make request to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
+
+- ### movie-ui
+
+  `Spring Boot` Java Web application that has a UI for searching movies indexed in `movie-api`
 
 ## Prerequisites
 
@@ -23,7 +27,7 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`OMDb API`](https://www.omdbapi.com/) KEY
 
-  To search movies in `OMDb API` and add them, we need to obtain an API KEY from `OMDb API`. In order to do it, access https://www.omdbapi.com/apikey.aspx and follow the steps provided by the website.
+  To search movies in `OMDb API`, we need to obtain an API KEY from `OMDb API`. In order to do it, access https://www.omdbapi.com/apikey.aspx and follow the steps provided by the website.
 
 ## Start and Initialize LocalStack
 
@@ -31,51 +35,73 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 - Start `LocalStack` Docker container
   ```
-  DEBUG=1 docker-compose up -d
+  DEBUG=1 docker-compose up
   ```
+  > **Note:** Debug logs are enabled so that we can see what is happening
 
-- Initialize `LocalStack`
+- In a new terminal, initialize `LocalStack` by running the following script
   ```
   ./init-localstack.sh <OMDB_API_KEY>
   ```
   The script requires `OMDB_API_KEY` as first and unique argument. The script will create:
-  - a domain for `OpenSearch` will be created as well as the `movies` index using the `movies-mapping.json` provided;
-  - the `S3` bucket `com.mycompany.movieapi.posters`;
-  - a secret for `OMDB_API_KEY`.
+  - a domain for `OpenSearch` as well as the `movies` index using the `movies-mapping.json` provided;
+  - bucket `com.mycompany.movieapi.posters` in `S3`;
+  - a secret for `OMDB_API_KEY` in `Secrets Manager`.
 
-## Running application with Maven
+## Running applications with Maven
 
-In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
-```
-./mvnw clean spring-boot:run --projects movie-api -Dspring-boot.run.jvmArguments="-Daws.accessKey=key -Daws.secretAccessKey=secret"
-```
+- **movie-api**
+  
+  In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
+  ```
+  ./mvnw clean spring-boot:run --projects movie-api -Dspring-boot.run.jvmArguments="-Daws.accessKey=key -Daws.secretAccessKey=secret"
+  ```
 
-## Running application as Docker container
+- **movie-ui**
 
-- ### Build Docker image
+  In another terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the command below
+  ```
+  ./mvnw clean spring-boot:run --projects movie-ui
+  ```
+
+## Running applications as Docker container
+
+- ### Build Docker images
 
   In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following script
   ```
   ./docker-build.sh
   ```
 
-- ### Run Docker container
+- ### Run Docker containers
 
-  In a terminal, run the following command
-  ```
-  docker run --rm --name movie-api -p 8080:8080 \
-    -e AWS_ACCESS_KEY=key -e AWS_SECRET_ACCESS_KEY=secret \
-    --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
-    ivanfranchin/movie-api:1.0.0
-  ```
+  - **movie-api**
+    
+    In a terminal, run the following command
+    ```
+    docker run --rm --name movie-api -p 9080:9080 \
+      -e AWS_ACCESS_KEY=key -e AWS_SECRET_ACCESS_KEY=secret \
+      --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
+      ivanfranchin/movie-api:1.0.0
+    ```
+
+  - **movie-ui**
+
+    In another terminal, run the command below
+    ```
+    docker run --rm --name movie-ui -p 9081:9081 \
+      -e MOVIE_API_URL=http://movie-api:9080 \
+      --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
+      ivanfranchin/movie-ui:1.0.0
+    ```
 
 ## Application URL
 
-| Application | Type       | URL                                         | Screenshot                              |
-|-------------|------------|---------------------------------------------|-----------------------------------------|
-| `movie-api` | Swagger    | http://localhost:8080/swagger-ui/index.html | ![swagger](documentation/swagger.jpeg)  |
-| `movie-api` | UI (admin) | http://localhost:8080/admin/movies          | ![swagger](documentation/ui-admin.jpeg) |
-| `movie-api` | UI (user)  | http://localhost:8080/user/movies           | ![swagger](documentation/ui-user.jpeg)  |
+| Application | Type    | URL                                         |
+|-------------|---------|---------------------------------------------|
+| `movie-api` | Swagger | http://localhost:9080/swagger-ui/index.html |
+| `movie-api` | UI      | http://localhost:9080/                      |
+| `movie-ui`  | UI      | http://localhost:9081/                      |
 
 ## Useful Links
 
@@ -93,7 +119,7 @@ In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanage
 
 ## Shutdown
 
-- To stop application, go to the terminal where it is running and press `Ctrl+C`
+- To stop the applications, go to the terminal where they are running and press `Ctrl+C`
 - To stop and remove `docker-compose` containers, network and volumes, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
   ```
   docker-compose down -v

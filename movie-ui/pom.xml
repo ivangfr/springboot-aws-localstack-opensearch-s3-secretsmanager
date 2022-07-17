@@ -9,15 +9,9 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
-    <artifactId>movie-api</artifactId>
-    <name>movie-api</name>
+    <artifactId>movie-ui</artifactId>
+    <name>movie-ui</name>
     <description>Demo project for Spring Boot</description>
-
-    <properties>
-        <opensearch-client.version>2.0.1</opensearch-client.version>
-        <amazon-awssdk.version>2.17.228</amazon-awssdk.version>
-        <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -37,30 +31,6 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- OpenSearch -->
-        <dependency>
-            <groupId>org.opensearch.client</groupId>
-            <artifactId>opensearch-rest-high-level-client</artifactId>
-            <version>${opensearch-client.version}</version>
-        </dependency>
-
-        <!-- AWS -->
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>secretsmanager</artifactId>
-        </dependency>
-
-        <!-- SpringDoc OpenApi -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc-openapi.version}</version>
-        </dependency>
-        
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -72,18 +42,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>software.amazon.awssdk</groupId>
-                <artifactId>bom</artifactId>
-                <version>${amazon-awssdk.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>

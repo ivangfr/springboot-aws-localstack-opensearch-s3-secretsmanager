@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Movies-Api</title>
+    <title>Movies-UI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 </head>
 
 <body>
 
 <main>
-    <div class="ui stackable massive menu">
-        <a th:href="@{/user/movies}" class="header item">Movies-Api</a>
-        <form th:action="@{/user/movies/search}" th:object="${searchRequest}" method="post">
+    <div class="ui inverted stackable massive menu">
+        <a th:href="@{/movies}" class="header item">Movies-UI</a>
+        <form th:action="@{/movies/search}" th:object="${searchRequest}" method="post">
             <div class="ui category search item">
                 <div class="ui icon input">
                     <input class="prompt" type="text" autocomplete="off" th:field="*{text}" placeholder="Search a movie...">
@@ -30,7 +30,7 @@
 
     <div class="ui container">
         <div class="ui four stackable doubling centered link cards" style="margin-top:10px">
-            <a class="ui centered card" th:each="movie:${movies}" th:href="@{/user/movies/{imdb}(imdb=${movie.imdb})}">
+            <a class="ui centered card" th:each="movie:${movies}" th:href="@{/movies/{imdb}(imdb=${movie.imdb})}">
                 <div class="image">
                     <img th:src="@{${movie.poster}}">
                 </div>

@@ -10,17 +10,17 @@
 
 <main>
     <div class="ui stackable menu">
-        <a th:href="@{/admin/movies}" class="header item">< Back</a>
+        <a th:href="@{/movies}" class="header item">< Back</a>
     </div>
 
     <div class="ui container">
-        <div class="ui two column grid" style="margin-top:10px">
+        <div class="ui two column grid">
             <div class="five wide column">
                 <img class="ui centered image" th:src="@{${movie.poster}}">
             </div>
             <div class="eleven wide column">
                 <div class="ui large segment">
-                    <form class="ui form" th:action="@{/admin/movies}" th:object="${movie}" th:method="put" enctype="multipart/form-data">
+                    <form class="ui form" th:action="@{/movies}" th:object="${movie}" th:method="put" enctype="multipart/form-data">
                         <div class="three fields">
                             <div class="required field">
                                 <label>Imdb</label>
@@ -35,16 +35,10 @@
                                 <input type="number" th:field="*{year}">
                             </div>
                         </div>
-                        <div class="ui divider"></div>
                         <div class="field">
                             <label>Poster File</label>
                             <input type="file" name="posterFile">
                         </div>
-                        <div class="field">
-                            <label>Poster URL</label>
-                            <input type="text" readonly="" th:field="*{poster}">
-                        </div>
-                        <div class="ui divider"></div>
                         <div class="three fields">
                             <div class="field">
                                 <label>Released</label>
@@ -58,6 +52,10 @@
                                 <label>Runtime</label>
                                 <input type="text" th:field="*{runtime}">
                             </div>
+                        </div>
+                        <div class="field">
+                            <label>Genre</label>
+                            <input type="text" th:field="*{genre}">
                         </div>
                         <div class="two fields">
                             <div class="field">
@@ -75,7 +73,7 @@
                         </div>
                         <div class="field">
                             <label>Plot</label>
-                            <textarea type="text" rows="3" th:field="*{plot}"></textarea>
+                            <textarea type="text" rows="2" th:field="*{plot}"></textarea>
                         </div>
                         <div class="three fields">
                             <div class="field">

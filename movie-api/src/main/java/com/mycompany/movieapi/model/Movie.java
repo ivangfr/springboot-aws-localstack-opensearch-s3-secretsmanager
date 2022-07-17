@@ -10,6 +10,7 @@ public class Movie {
     private String imdb;
     private String title;
     private String poster;
+    private String posterUrl;
     private String year;
     private String released;
     private String imdbRating;

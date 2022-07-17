@@ -1,4 +1,4 @@
-package com.mycompany.movieapi.rest;
+package com.mycompany.movieui.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Data
 @JsonInclude(Include.NON_NULL)
-public class SearchMovieResponse {
+public class SearchResponse {
 
     private List<Hit> hits;
     private String took;

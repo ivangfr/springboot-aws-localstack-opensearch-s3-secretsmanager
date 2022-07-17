@@ -3,10 +3,16 @@ package com.mycompany.movieapi.mapper;
 import com.mycompany.movieapi.client.OmdbResponse;
 import com.mycompany.movieapi.model.Movie;
 import com.mycompany.movieapi.rest.AddMovieRequest;
+import com.mycompany.movieapi.rest.MovieResponse;
+import com.mycompany.movieapi.rest.SearchResponse;
 import lombok.RequiredArgsConstructor;
+import org.opensearch.search.SearchHit;
+import org.opensearch.search.SearchHits;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -18,6 +24,7 @@ public class MovieMapper {
                 movieMap.get("imdb") != null ? String.valueOf(movieMap.get("imdb")) : null,
                 movieMap.get("title") != null ? String.valueOf(movieMap.get("title")) : null,
                 movieMap.get("poster") != null ? String.valueOf(movieMap.get("poster")) : null,
+                movieMap.get("posterUrl") != null ? String.valueOf(movieMap.get("posterUrl")) : null,
                 movieMap.get("year") != null ? String.valueOf(movieMap.get("year")) : null,
                 movieMap.get("released") != null ? String.valueOf(movieMap.get("released")) : null,
                 movieMap.get("imdbRating") != null ? String.valueOf(movieMap.get("imdbRating")) : null,
@@ -38,6 +45,7 @@ public class MovieMapper {
         movieMap.put("imdb", movie.getImdb());
         movieMap.put("title", movie.getTitle());
         movieMap.put("poster", movie.getPoster());
+        movieMap.put("posterUrl", movie.getPosterUrl());
         movieMap.put("year", movie.getYear());
         movieMap.put("released", movie.getReleased());
         movieMap.put("imdbRating", movie.getImdbRating());
@@ -53,43 +61,80 @@ public class MovieMapper {
         return movieMap;
     }
 
-    public Map<String, Object> toMovieMap(AddMovieRequest addMovieRequest) {
-        Map<String, Object> movieMap = new HashMap<>();
-        movieMap.put("imdb", addMovieRequest.getImdb());
-        movieMap.put("title", addMovieRequest.getTitle());
-        movieMap.put("posterUrl", addMovieRequest.getPosterUrl());
-        movieMap.put("year", addMovieRequest.getYear());
-        movieMap.put("released", addMovieRequest.getReleased());
-        movieMap.put("imdbRating", addMovieRequest.getImdbRating());
-        movieMap.put("genre", addMovieRequest.getGenre());
-        movieMap.put("runtime", addMovieRequest.getRuntime());
-        movieMap.put("director", addMovieRequest.getDirector());
-        movieMap.put("writer", addMovieRequest.getWriter());
-        movieMap.put("actors", addMovieRequest.getActors());
-        movieMap.put("plot", addMovieRequest.getPlot());
-        movieMap.put("language", addMovieRequest.getLanguage());
-        movieMap.put("country", addMovieRequest.getCountry());
-        movieMap.put("awards", addMovieRequest.getAwards());
-        return movieMap;
+    public Movie toMovie(AddMovieRequest addMovieRequest) {
+        return new Movie(
+                addMovieRequest.getImdb(),
+                addMovieRequest.getTitle(),
+                null,
+                addMovieRequest.getPosterUrl().toString(),
+                addMovieRequest.getYear(),
+                addMovieRequest.getReleased(),
+                addMovieRequest.getImdbRating(),
+                addMovieRequest.getGenre(),
+                addMovieRequest.getRuntime(),
+                addMovieRequest.getDirector(),
+                addMovieRequest.getWriter(),
+                addMovieRequest.getActors(),
+                addMovieRequest.getPlot(),
+                addMovieRequest.getLanguage(),
+                addMovieRequest.getCountry(),
+                addMovieRequest.getAwards()
+        );
     }
 
-    public Map<String, Object> toMovieMap(OmdbResponse omdbResponse) {
-        Map<String, Object> movieMap = new HashMap<>();
-        movieMap.put("imdb", omdbResponse.getImdb());
-        movieMap.put("title", omdbResponse.getTitle());
-        movieMap.put("posterUrl", omdbResponse.getPosterUrl());
-        movieMap.put("year", omdbResponse.getYear());
-        movieMap.put("released", omdbResponse.getReleased());
-        movieMap.put("imdbRating", omdbResponse.getImdbRating());
-        movieMap.put("genre", omdbResponse.getGenre());
-        movieMap.put("runtime", omdbResponse.getRuntime());
-        movieMap.put("director", omdbResponse.getDirector());
-        movieMap.put("writer", omdbResponse.getWriter());
-        movieMap.put("actors", omdbResponse.getActors());
-        movieMap.put("plot", omdbResponse.getPlot());
-        movieMap.put("language", omdbResponse.getLanguage());
-        movieMap.put("country", omdbResponse.getCountry());
-        movieMap.put("awards", omdbResponse.getAwards());
-        return movieMap;
+    public Movie toMovie(OmdbResponse omdbResponse) {
+        return new Movie(
+                omdbResponse.getImdb(),
+                omdbResponse.getTitle(),
+                null,
+                omdbResponse.getPosterUrl(),
+                omdbResponse.getYear(),
+                omdbResponse.getReleased(),
+                omdbResponse.getImdbRating(),
+                omdbResponse.getGenre(),
+                omdbResponse.getRuntime(),
+                omdbResponse.getDirector(),
+                omdbResponse.getWriter(),
+                omdbResponse.getActors(),
+                omdbResponse.getPlot(),
+                omdbResponse.getLanguage(),
+                omdbResponse.getCountry(),
+                omdbResponse.getAwards()
+        );
+    }
+
+    public SearchResponse toSearchResponse(SearchHits searchHits) {
+        SearchResponse searchResponse = new SearchResponse();
+        List<SearchResponse.Hit> hits = new ArrayList<>();
+        for (SearchHit searchHit : searchHits.getHits()) {
+            SearchResponse.Hit hit = new SearchResponse.Hit();
+            hit.setIndex(searchHit.getIndex());
+            hit.setId(searchHit.getId());
+            hit.setScore(searchHit.getScore());
+            hit.setSource(searchHit.getSourceAsMap());
+            hits.add(hit);
+        }
+        searchResponse.setHits(hits);
+        return searchResponse;
+    }
+
+    public MovieResponse toMovieResponse(Movie movie) {
+        return new MovieResponse(
+                movie.getImdb(),
+                movie.getTitle(),
+                movie.getPoster(),
+                movie.getYear(),
+                movie.getReleased(),
+                movie.getImdbRating(),
+                movie.getGenre(),
+                movie.getRuntime(),
+                movie.getDirector(),
+                movie.getWriter(),
+                movie.getActors(),
+                movie.getPlot(),
+                movie.getLanguage(),
+                movie.getCountry(),
+                movie.getAwards()
+        );
     }
 }

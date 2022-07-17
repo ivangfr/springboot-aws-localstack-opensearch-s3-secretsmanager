@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Movies-Api</title>
+    <title>Movies-API</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 </head>
 
@@ -10,8 +10,8 @@
 
 <main>
     <div class="ui stackable massive menu">
-        <a class="header item">Movies-Api</a>
-        <form th:action="@{/admin/movies/search}" th:object="${searchRequest}" method="post">
+        <a th:href="@{/movies}" class="header item">Movies-API</a>
+        <form th:action="@{/movies/search}" th:object="${searchRequest}" method="post">
             <div class="ui category search item">
                 <div class="ui icon input">
                     <input class="prompt" type="text" autocomplete="off" th:field="*{text}" placeholder="Search in OMDb API...">
@@ -30,7 +30,7 @@
 
     <div class="ui container">
         <div class="ui five stackable doubling centered link cards" th:if="${omdbResponse} == null" style="margin-top:10px">
-            <a class="ui centered card" th:each="movie:${movies}" th:href="@{/admin/movies/{imdb}(imdb=${movie.imdb})}">
+            <a class="ui centered card" th:each="movie:${movies}" th:href="@{/movies/{imdb}(imdb=${movie.imdb})}">
                 <div class="image">
                     <img th:src="@{${movie.poster}}">
                 </div>
@@ -102,7 +102,7 @@
                         <div class="ui horizontal label">Awards</div>
                         <span th:text="${omdbResponse.awards}"></span>
                     </div>
-                    <form th:action="@{/admin/movies}" th:object="${addOmdbResponse}" method="post">
+                    <form th:action="@{/movies}" th:object="${addOmdbResponse}" method="post">
                         <input type="hidden" th:field="*{imdb}"/>
                         <input type="hidden" th:field="*{title}"/>
                         <input type="hidden" th:field="*{posterUrl}"/>
