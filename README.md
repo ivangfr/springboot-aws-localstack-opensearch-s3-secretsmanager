@@ -12,6 +12,13 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
   [`Spring Boot`](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/) Java Web application that exposes a REST API and provides a UI for indexing movies.
 
+  It has the following endpoints:
+  ```
+   GET /api/movies/{imdb}
+  POST /api/movies {"imdb":"...", "title":"...", "posterUrl":"...", "year":"...", "released":"...", "imdbRating":"...", "genre":"...", "runtime":"...", "director":"...", "writer":"...", "actors":"...", "plot":"...", "language":"...", "country":"...", "awards":"..."}
+  POST /api/movies/{imdb}/uploadPoster
+  ```
+
   The information of the movies, such as `imdb`, `title`, `year`, etc, are stored in `OpenSearch` that is hosted in `LocalStack`. The movie's `poster` are stored in `S3` buckets.
 
   The `movie-api` has access to [`OMDb API`](https://www.omdbapi.com/) to search and add easily new movies. In order to make request to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
@@ -37,7 +44,7 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
   ```
   DEBUG=1 docker-compose up
   ```
-  > **Note:** Debug logs are enabled so that we can see what is happening
+  > **Note**: Debug logs are enabled so that we can see what is happening
 
 - In a new terminal, initialize `LocalStack` by running the following script
   ```
@@ -45,7 +52,7 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
   ```
   The script requires `OMDB_API_KEY` as first and unique argument. The script will create:
   - a domain for `OpenSearch` as well as the `movies` index using the `movies-mapping.json` provided;
-  - bucket `com.mycompany.movieapi.posters` in `S3`;
+  - bucket `com.ivanfranchin.movieapi.posters` in `S3`;
   - a secret for `OMDB_API_KEY` in `Secrets Manager`.
 
 ## Running applications with Maven
@@ -100,8 +107,8 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 | Application | Type    | URL                                         |
 |-------------|---------|---------------------------------------------|
 | `movie-api` | Swagger | http://localhost:9080/swagger-ui/index.html |
-| `movie-api` | UI      | http://localhost:9080/                      |
-| `movie-ui`  | UI      | http://localhost:9081/                      |
+| `movie-api` | UI      | http://localhost:9080                       |
+| `movie-ui`  | UI      | http://localhost:9081                       |
 
 ## Useful Links
 

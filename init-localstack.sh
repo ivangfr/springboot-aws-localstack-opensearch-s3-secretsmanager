@@ -63,7 +63,7 @@ echo
 echo "Creating S3 bucket"
 echo "------------------"
 
-docker exec -t localstack aws --endpoint-url=http://localhost:4566 s3 mb s3://com.mycompany.movieapi.posters
+docker exec -t localstack aws --endpoint-url=http://localhost:4566 s3 mb s3://com.ivanfranchin.movieapi.posters
 
 echo
 echo "Creating secrets in secretsmanager"
