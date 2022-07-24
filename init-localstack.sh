@@ -56,7 +56,7 @@ echo
 echo
 echo "Creating movies index"
 echo "---------------------"
-curl -X PUT $AWS_LOCALSTACK_OPENSEARCH_URL/movies -H "Content-Type: application/json" -d @opensearch/movies-mapping.json
+curl -X PUT $AWS_LOCALSTACK_OPENSEARCH_URL/movies -H "Content-Type: application/json" -d @opensearch/movies-settings.json
 
 echo
 echo

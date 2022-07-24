@@ -20,4 +20,5 @@ public class Movie {
     String language;
     String country;
     String awards;
+    Long createdAt;
 }

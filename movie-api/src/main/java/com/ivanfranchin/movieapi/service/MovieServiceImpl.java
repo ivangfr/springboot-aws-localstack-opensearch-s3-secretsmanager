@@ -3,7 +3,7 @@ package com.ivanfranchin.movieapi.service;
 import com.ivanfranchin.movieapi.exception.MovieNotFoundException;
 import com.ivanfranchin.movieapi.mapper.MovieMapper;
 import com.ivanfranchin.movieapi.model.Movie;
-import com.ivanfranchin.movieapi.rest.SearchResponse;
+import com.ivanfranchin.movieapi.rest.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

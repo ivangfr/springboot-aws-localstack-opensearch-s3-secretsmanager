@@ -1,4 +1,4 @@
-package com.ivanfranchin.movieapi.rest;
+package com.ivanfranchin.movieapi.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

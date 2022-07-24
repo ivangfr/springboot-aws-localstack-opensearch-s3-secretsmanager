@@ -1,4 +1,4 @@
-package com.ivanfranchin.movieapi.rest;
+package com.ivanfranchin.movieapi.rest.dto;
 
 import lombok.Value;
 
@@ -20,4 +20,5 @@ public class MovieResponse {
     String language;
     String country;
     String awards;
+    Long createdAt;
 }

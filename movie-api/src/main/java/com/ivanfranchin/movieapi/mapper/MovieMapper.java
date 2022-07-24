@@ -2,14 +2,15 @@ package com.ivanfranchin.movieapi.mapper;
 
 import com.ivanfranchin.movieapi.client.OmdbResponse;
 import com.ivanfranchin.movieapi.model.Movie;
-import com.ivanfranchin.movieapi.rest.AddMovieRequest;
-import com.ivanfranchin.movieapi.rest.MovieResponse;
-import com.ivanfranchin.movieapi.rest.SearchResponse;
+import com.ivanfranchin.movieapi.rest.dto.AddMovieRequest;
+import com.ivanfranchin.movieapi.rest.dto.MovieResponse;
+import com.ivanfranchin.movieapi.rest.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.opensearch.search.SearchHit;
 import org.opensearch.search.SearchHits;
 import org.springframework.stereotype.Component;
 
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,8 @@ public class MovieMapper {
                 movieMap.get("plot") != null ? String.valueOf(movieMap.get("plot")) : null,
                 movieMap.get("language") != null ? String.valueOf(movieMap.get("language")) : null,
                 movieMap.get("country") != null ? String.valueOf(movieMap.get("country")) : null,
-                movieMap.get("awards") != null ? String.valueOf(movieMap.get("awards")) : null
+                movieMap.get("awards") != null ? String.valueOf(movieMap.get("awards")) : null,
+                movieMap.get("createdAt") != null ? Long.valueOf(String.valueOf(movieMap.get("createdAt"))) : null
         );
     }
 
@@ -58,6 +60,7 @@ public class MovieMapper {
         movieMap.put("language", movie.getLanguage());
         movieMap.put("country", movie.getCountry());
         movieMap.put("awards", movie.getAwards());
+        movieMap.put("createdAt", movie.getCreatedAt());
         return movieMap;
     }
 
@@ -78,7 +81,8 @@ public class MovieMapper {
                 addMovieRequest.getPlot(),
                 addMovieRequest.getLanguage(),
                 addMovieRequest.getCountry(),
-                addMovieRequest.getAwards()
+                addMovieRequest.getAwards(),
+                Clock.systemDefaultZone().millis()
         );
     }
 
@@ -99,7 +103,8 @@ public class MovieMapper {
                 omdbResponse.getPlot(),
                 omdbResponse.getLanguage(),
                 omdbResponse.getCountry(),
-                omdbResponse.getAwards()
+                omdbResponse.getAwards(),
+                Clock.systemDefaultZone().millis()
         );
     }
 
@@ -134,7 +139,8 @@ public class MovieMapper {
                 movie.getPlot(),
                 movie.getLanguage(),
                 movie.getCountry(),
-                movie.getAwards()
+                movie.getAwards(),
+                movie.getCreatedAt()
         );
     }
 }

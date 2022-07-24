@@ -1,0 +1,86 @@
+{
+  "settings": {
+    "index": {
+      "max_ngram_diff": 20
+    },
+    "analysis": {
+      "analyzer": {
+        "my_analyzer": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "edge_ngram_filter"
+          ]
+        },
+        "my_search_analyzer": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      },
+      "filter": {
+        "edge_ngram_filter": {
+          "type": "edge_ngram",
+          "min_gram": 1,
+          "max_gram": 20
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "imdb": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "my_analyzer",
+        "search_analyzer": "my_search_analyzer"
+      },
+      "poster": {
+        "type": "text"
+      },
+      "year": {
+        "type": "text"
+      },
+      "released": {
+        "type": "text"
+      },
+      "imdbRating": {
+        "type": "text"
+      },
+      "genre": {
+        "type": "text"
+      },
+      "runtime": {
+        "type": "text"
+      },
+      "director": {
+        "type": "text"
+      },
+      "writer": {
+        "type": "text"
+      },
+      "actors": {
+        "type": "text"
+      },
+      "plot": {
+        "type": "text"
+      },
+      "language": {
+        "type": "text"
+      },
+      "country": {
+        "type": "text"
+      },
+      "awards": {
+        "type": "text"
+      },
+      "createdAt": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_second"
+      }
+    }
+  }
+}

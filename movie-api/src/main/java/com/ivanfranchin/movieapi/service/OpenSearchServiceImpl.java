@@ -1,7 +1,7 @@
 package com.ivanfranchin.movieapi.service;
 
-import com.ivanfranchin.movieapi.property.AwsProperties;
 import com.ivanfranchin.movieapi.exception.OpenSearchServiceException;
+import com.ivanfranchin.movieapi.property.AwsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.opensearch.action.get.GetRequest;
@@ -49,12 +49,13 @@ public class OpenSearchServiceImpl implements OpenSearchService {
     public SearchHits searchMovies(String title) {
         try {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-            searchSourceBuilder.size(50);
+            searchSourceBuilder.size(50).sort("createdAt");
             if (StringUtils.hasText(title)) {
-                searchSourceBuilder.query(QueryBuilders.termQuery("title", title));
+                searchSourceBuilder.query(QueryBuilders.matchQuery("title", title));
             }
             SearchRequest searchRequest = new SearchRequest(awsProperties.getOpensearch().getIndexes())
                     .source(searchSourceBuilder);
+            //log.info(searchRequest.source().toString());
             SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
             return searchResponse.getHits();
         } catch (Exception e) {

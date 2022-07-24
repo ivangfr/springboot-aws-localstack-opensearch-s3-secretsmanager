@@ -14,7 +14,7 @@
         <form th:action="@{/movies/search}" th:object="${searchRequest}" method="post">
             <div class="ui category search item">
                 <div class="ui icon input">
-                    <input class="prompt" type="text" autocomplete="off" th:field="*{text}" placeholder="Search a movie...">
+                    <input class="prompt" type="text" autocomplete="off" th:field="*{text}" placeholder="Search a movie by title...">
                     <i class="search icon"></i>
                 </div>
             </div>

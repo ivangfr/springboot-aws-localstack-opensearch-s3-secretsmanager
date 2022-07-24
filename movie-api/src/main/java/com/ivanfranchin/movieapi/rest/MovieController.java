@@ -1,6 +1,9 @@
 package com.ivanfranchin.movieapi.rest;
 
 import com.ivanfranchin.movieapi.mapper.MovieMapper;
+import com.ivanfranchin.movieapi.rest.dto.AddMovieRequest;
+import com.ivanfranchin.movieapi.rest.dto.MovieResponse;
+import com.ivanfranchin.movieapi.rest.dto.SearchResponse;
 import com.ivanfranchin.movieapi.service.MovieService;
 import com.ivanfranchin.movieapi.service.PosterService;
 import com.ivanfranchin.movieapi.model.Movie;

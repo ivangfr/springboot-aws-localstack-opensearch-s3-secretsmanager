@@ -26,7 +26,8 @@ public class MovieMapper {
                 movieMap.get("plot") != null ? String.valueOf(movieMap.get("plot")) : null,
                 movieMap.get("language") != null ? String.valueOf(movieMap.get("language")) : null,
                 movieMap.get("country") != null ? String.valueOf(movieMap.get("country")) : null,
-                movieMap.get("awards") != null ? String.valueOf(movieMap.get("awards")) : null
+                movieMap.get("awards") != null ? String.valueOf(movieMap.get("awards")) : null,
+                movieMap.get("createdAt") != null ? Long.valueOf(String.valueOf(movieMap.get("createdAt"))) : null
         );
     }
 }

@@ -42,18 +42,23 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 - Start `LocalStack` Docker container
   ```
-  DEBUG=1 docker-compose up
+  DEBUG=1 docker-compose up -d
   ```
-  > **Note**: Debug logs are enabled so that we can see what is happening
+  > **Note**: Debug logs are enabled so that we have more insights about what is happening
 
-- In a new terminal, initialize `LocalStack` by running the following script
+- Initialize `LocalStack` by running the following script
   ```
   ./init-localstack.sh <OMDB_API_KEY>
   ```
   The script requires `OMDB_API_KEY` as first and unique argument. The script will create:
-  - a domain for `OpenSearch` as well as the `movies` index using the `movies-mapping.json` provided;
+  - a domain for `OpenSearch` as well as the `movies` index using the `movies-settings.json` provided;
   - bucket `com.ivanfranchin.movieapi.posters` in `S3`;
   - a secret for `OMDB_API_KEY` in `Secrets Manager`.
+
+- \[Optional\] Monitor `localstack` Docker container logs
+  ```
+  docker logs localstack -f
+  ```
 
 ## Running applications with Maven
 
@@ -109,6 +114,16 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 | `movie-api` | Swagger | http://localhost:9080/swagger-ui/index.html |
 | `movie-api` | UI      | http://localhost:9080                       |
 | `movie-ui`  | UI      | http://localhost:9081                       |
+
+## Demo
+
+- **Adding movie**: in the GIF below, we are using `movie-api` to add the movie _"American Pie 2"_
+
+  ![demo-adding-movie](documentation/demo-adding-movie.gif)
+
+- **Searching movies**: in the GIF below, we are using `movie-ui` to search for movies
+
+  ![demo-searching-movies](documentation/demo-searching-movies.gif)
 
 ## Useful Links
 
