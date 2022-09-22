@@ -29,7 +29,7 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 ## Prerequisites
 
-- [`Java 11+`](https://www.oracle.com/java/technologies/downloads/#java11)
+- [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
 - [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`OMDb API`](https://www.omdbapi.com/) KEY
@@ -109,11 +109,11 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 ## Application URL
 
-| Application | Type    | URL                                         |
-|-------------|---------|---------------------------------------------|
-| `movie-api` | Swagger | http://localhost:9080/swagger-ui/index.html |
-| `movie-api` | UI      | http://localhost:9080                       |
-| `movie-ui`  | UI      | http://localhost:9081                       |
+| Application | Type    | URL                                   |
+|-------------|---------|---------------------------------------|
+| `movie-api` | Swagger | http://localhost:9080/swagger-ui.html |
+| `movie-api` | UI      | http://localhost:9080                 |
+| `movie-ui`  | UI      | http://localhost:9081                 |
 
 ## Demo
 

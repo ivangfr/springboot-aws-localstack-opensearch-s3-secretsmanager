@@ -58,19 +58,17 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private List<Movie> getMovieList(SearchResponse searchResponse) {
-        if (searchResponse.getHits() == null) {
+        if (searchResponse.hits() == null) {
             return Collections.emptyList();
         }
-        return searchResponse.getHits()
+        return searchResponse.hits()
                 .stream()
-                .map(SearchResponse.Hit::getSource)
+                .map(SearchResponse.Hit::source)
                 .map(movieMapper::toMovie)
                 .collect(Collectors.toList());
     }
 
     private SearchResponse createSearchResponseError(String errorMessage) {
-        SearchResponse searchResponse = new SearchResponse();
-        searchResponse.setError(new SearchResponse.Error(errorMessage));
-        return searchResponse;
+        return new SearchResponse(new SearchResponse.Error(errorMessage));
     }
 }

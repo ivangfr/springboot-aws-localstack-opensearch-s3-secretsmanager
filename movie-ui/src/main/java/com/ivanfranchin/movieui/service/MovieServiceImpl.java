@@ -35,12 +35,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private List<Movie> getMovieList(SearchResponse searchResponse) {
-        if (searchResponse.getHits() == null) {
+        if (searchResponse.hits() == null) {
             return Collections.emptyList();
         }
-        return searchResponse.getHits()
+        return searchResponse.hits()
                 .stream()
-                .map(SearchResponse.Hit::getSource)
+                .map(SearchResponse.Hit::source)
                 .map(movieMapper::toMovie)
                 .collect(Collectors.toList());
     }

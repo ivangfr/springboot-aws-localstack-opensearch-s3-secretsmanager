@@ -109,18 +109,16 @@ public class MovieMapper {
     }
 
     public SearchResponse toSearchResponse(SearchHits searchHits) {
-        SearchResponse searchResponse = new SearchResponse();
         List<SearchResponse.Hit> hits = new ArrayList<>();
         for (SearchHit searchHit : searchHits.getHits()) {
-            SearchResponse.Hit hit = new SearchResponse.Hit();
-            hit.setIndex(searchHit.getIndex());
-            hit.setId(searchHit.getId());
-            hit.setScore(searchHit.getScore());
-            hit.setSource(searchHit.getSourceAsMap());
-            hits.add(hit);
+            hits.add(new SearchResponse.Hit(
+                    searchHit.getIndex(),
+                    searchHit.getId(),
+                    searchHit.getScore(),
+                    searchHit.getSourceAsMap()
+            ));
         }
-        searchResponse.setHits(hits);
-        return searchResponse;
+        return new SearchResponse(hits);
     }
 
     public MovieResponse toMovieResponse(Movie movie) {
