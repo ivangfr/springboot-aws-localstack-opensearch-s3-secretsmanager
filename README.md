@@ -2,7 +2,7 @@
 
 In this project, we are going to use [`LocalStack`](https://localstack.cloud/) to simulate locally, some services provided by [`AWS Cloud`](https://aws.amazon.com/) such as [`OpenSearch`](https://aws.amazon.com/opensearch-service/), [`S3`](https://aws.amazon.com/s3/), and [`Secrets Manager`](https://aws.amazon.com/secrets-manager/).
 
-## Project Architecture
+## Project Diagram
 
 ![project-diagram](documentation/project-diagram.png)
 
@@ -44,7 +44,11 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
   ```
   DEBUG=1 docker-compose up -d
   ```
-  > **Note**: Debug logs are enabled so that we have more insights about what is happening
+
+- \[Optional\] Debug logs are enabled so that we have more insights about what is happening. To monitor `localstack` Docker container logs, run the command below
+  ```
+  docker logs localstack -f
+  ```
 
 - Initialize `LocalStack` by running the following script
   ```
@@ -54,11 +58,6 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
   - a domain for `OpenSearch` as well as the `movies` index using the `movies-settings.json` provided;
   - bucket `com.ivanfranchin.movieapi.posters` in `S3`;
   - a secret for `OMDB_API_KEY` in `Secrets Manager`.
-
-- \[Optional\] Monitor `localstack` Docker container logs
-  ```
-  docker logs localstack -f
-  ```
 
 ## Running applications with Maven
 

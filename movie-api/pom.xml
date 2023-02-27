@@ -15,8 +15,8 @@
 
     <properties>
         <opensearch-client.version>2.2.1</opensearch-client.version>
-        <amazon-awssdk.version>2.17.276</amazon-awssdk.version>
-        <springdoc-openapi.version>1.6.11</springdoc-openapi.version>
+        <amazon-awssdk.version>2.17.295</amazon-awssdk.version>
+        <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
     </properties>
 
     <dependencies>
@@ -57,7 +57,7 @@
         <!-- SpringDoc OpenApi -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi.version}</version>
         </dependency>
         

@@ -11,6 +11,10 @@ OMDB_API_KEY=$1
 TIMEOUT=600
 
 echo
+echo "Initializing LocalStack"
+echo "======================="
+
+echo
 echo "Installing jq"
 echo "-------------"
 docker exec -t localstack apt-get -y install jq
@@ -76,4 +80,8 @@ echo "----------------------------------------"
 echo "           AWS_LOCALSTACK_URL=$AWS_LOCALSTACK_URL"
 echo "AWS_LOCALSTACK_OPENSEARCH_URL=$AWS_LOCALSTACK_OPENSEARCH_URL"
 echo "----------------------------------------"
+
+echo
+echo "LocalStack initialized successfully"
+echo "==================================="
 echo

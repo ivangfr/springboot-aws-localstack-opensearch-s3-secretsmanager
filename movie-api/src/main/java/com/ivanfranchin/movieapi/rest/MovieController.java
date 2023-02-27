@@ -1,12 +1,13 @@
 package com.ivanfranchin.movieapi.rest;
 
 import com.ivanfranchin.movieapi.mapper.MovieMapper;
+import com.ivanfranchin.movieapi.model.Movie;
 import com.ivanfranchin.movieapi.rest.dto.AddMovieRequest;
 import com.ivanfranchin.movieapi.rest.dto.MovieResponse;
 import com.ivanfranchin.movieapi.rest.dto.SearchResponse;
 import com.ivanfranchin.movieapi.service.MovieService;
 import com.ivanfranchin.movieapi.service.PosterService;
-import com.ivanfranchin.movieapi.model.Movie;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
