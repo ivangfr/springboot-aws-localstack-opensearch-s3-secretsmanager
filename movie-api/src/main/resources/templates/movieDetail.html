@@ -21,6 +21,7 @@
             <div class="eleven wide column">
                 <div class="ui large segment">
                     <form class="ui form" th:action="@{/movies}" th:object="${movie}" th:method="put" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{poster}">
                         <div class="three fields">
                             <div class="required field">
                                 <label>Imdb</label>
@@ -37,7 +38,7 @@
                         </div>
                         <div class="field">
                             <label>Poster File</label>
-                            <input type="file" name="posterFile">
+                            <input type="file" name="posterFile" accept=".jpg, .jpeg, .png">
                         </div>
                         <div class="three fields">
                             <div class="field">
