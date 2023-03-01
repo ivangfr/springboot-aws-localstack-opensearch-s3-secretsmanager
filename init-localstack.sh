@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if ! [[ $(docker ps -q -f name=localstack) ]]; then
+  echo "WARNING: The localstack Docker container is not running. Please, start it first."
+  exit 1
+fi
+
 if [ -z "$1" ]; then
   echo "WARNING: OMDB_API_KEY must be informed as 1st parameter"
   exit 1
@@ -8,7 +13,6 @@ fi
 AWS_REGION=eu-west-1
 OPENSEARCH_DOMAIN_NAME=my-domain
 OMDB_API_KEY=$1
-TIMEOUT=600
 
 echo
 echo "Initializing LocalStack"
@@ -27,20 +31,22 @@ docker exec -t localstack aws --endpoint-url=http://localhost:4566 opensearch cr
 echo
 echo "Waiting for OpenSearch domain creation to complete"
 echo "--------------------------------------------------"
-while true ; do
+TIMEOUT=$((7 * 60))  # set timeout to 7 minutes
+WAIT_INTERVAL=1
+for ((i=0; i<TIMEOUT; i+=WAIT_INTERVAL)); do
   VAR=$(docker exec -t localstack aws --endpoint-url=http://localhost:4566 opensearch describe-domain --domain-name $OPENSEARCH_DOMAIN_NAME | jq ".DomainStatus.Processing")
   if [ "$VAR" = false ] ; then
+    echo
     echo "Processing completed!"
     break
   fi
-
-  if [ $SECONDS -ge $TIMEOUT ] ; then
-    echo "${log_waiting} TIMEOUT"
-    break;
-  else
-    printf "."
+  if [ $i -ge $TIMEOUT ] ; then
+    echo
+    echo "The process TIMEOUT"
+    break
   fi
-  sleep 1
+  printf "."
+  sleep $WAIT_INTERVAL
 done
 
 AWS_LOCALSTACK_URL="http://localhost.localstack.cloud:4566"

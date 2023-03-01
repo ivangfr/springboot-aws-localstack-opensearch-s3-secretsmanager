@@ -18,7 +18,6 @@ services:
       # ---
       - DEBUG=${DEBUG-}
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
-      - HOST_TMP_FOLDER=$PWD/tmp/localstack
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - "$PWD/tmp/localstack:/var/lib/localstack"
