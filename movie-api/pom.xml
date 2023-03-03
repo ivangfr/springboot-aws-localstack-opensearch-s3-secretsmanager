@@ -15,7 +15,7 @@
 
     <properties>
         <opensearch-client.version>2.5.0</opensearch-client.version>
-        <amazon-awssdk.version>2.17.295</amazon-awssdk.version>
+        <amazon-awssdk.version>2.20.12</amazon-awssdk.version>
         <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
     </properties>
 

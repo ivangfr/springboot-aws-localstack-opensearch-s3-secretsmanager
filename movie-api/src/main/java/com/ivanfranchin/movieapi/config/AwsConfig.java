@@ -23,6 +23,7 @@ public class AwsConfig {
         return S3Client.builder()
                 .region(Region.of(awsProperties.getRegion()))
                 .endpointOverride(URI.create(awsProperties.getEndpoint()))
+                .forcePathStyle(true)
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(
                                 awsProperties.getAccessKey(), awsProperties.getSecretAccessKey())))
