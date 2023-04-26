@@ -14,8 +14,8 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <opensearch-client.version>2.5.0</opensearch-client.version>
-        <amazon-awssdk.version>2.20.12</amazon-awssdk.version>
+        <opensearch-client.version>2.6.0</opensearch-client.version>
+        <amazon-awssdk.version>2.20.50</amazon-awssdk.version>
         <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
     </properties>
 
