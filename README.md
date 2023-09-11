@@ -35,7 +35,6 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - [`Java 17+`](https://www.oracle.com/java/technologies/downloads/#java17)
 - [`Docker`](https://www.docker.com/)
-- [`Docker-Compose`](https://docs.docker.com/compose/install/)
 - [`OMDb API`](https://www.omdbapi.com/) KEY
 
   To search movies in `OMDb API`, we need to obtain an API KEY from `OMDb API`. In order to do it, access https://www.omdbapi.com/apikey.aspx and follow the steps provided by the website.
@@ -46,7 +45,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - Start `LocalStack` Docker container
   ```
-  DEBUG=1 docker-compose up -d
+  DEBUG=1 docker compose up -d
   ```
 
 - \[Optional\] Debug logs are enabled so that we have more insights about what is happening. To monitor `localstack` Docker container logs, run the command below
@@ -145,9 +144,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 ## Shutdown
 
 - To stop the applications, go to the terminal where they are running and press `Ctrl+C`
-- To stop and remove `docker-compose` containers, network and volumes, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
+- To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
   ```
-  docker-compose down -v
+  docker compose down -v
   ```
 
 ## Cleanup
