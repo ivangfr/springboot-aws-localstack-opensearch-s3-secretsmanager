@@ -53,7 +53,7 @@ public class MoviesController {
             return "redirect:/movies";
         }
         List<Movie> movies = movieService.searchMovies(searchRequest.getText());
-        if (movies.size() == 0) {
+        if (movies.isEmpty()) {
             redirectAttributes.addFlashAttribute("message",
                     String.format("No movies with title containing '%s' were found!", searchRequest.getText()));
             return "redirect:/movies";
