@@ -1,6 +1,6 @@
 package com.ivanfranchin.movieapi.service;
 
-import com.ivanfranchin.movieapi.property.AwsProperties;
+import com.ivanfranchin.movieapi.properties.AwsProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.S3Client;

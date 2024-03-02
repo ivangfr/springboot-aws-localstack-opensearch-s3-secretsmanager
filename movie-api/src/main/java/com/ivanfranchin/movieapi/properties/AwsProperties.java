@@ -1,4 +1,4 @@
-package com.ivanfranchin.movieapi.property;
+package com.ivanfranchin.movieapi.properties;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

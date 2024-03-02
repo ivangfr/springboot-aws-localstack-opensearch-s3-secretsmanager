@@ -2,7 +2,7 @@ package com.ivanfranchin.movieui.client;
 
 import com.ivanfranchin.movieui.controller.SearchResponse;
 import com.ivanfranchin.movieui.model.Movie;
-import com.ivanfranchin.movieui.property.MovieApiProperties;
+import com.ivanfranchin.movieui.properties.MovieApiProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

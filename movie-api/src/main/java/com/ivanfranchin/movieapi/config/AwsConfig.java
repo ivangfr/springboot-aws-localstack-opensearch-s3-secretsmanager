@@ -1,6 +1,6 @@
 package com.ivanfranchin.movieapi.config;
 
-import com.ivanfranchin.movieapi.property.AwsProperties;
+import com.ivanfranchin.movieapi.properties.AwsProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

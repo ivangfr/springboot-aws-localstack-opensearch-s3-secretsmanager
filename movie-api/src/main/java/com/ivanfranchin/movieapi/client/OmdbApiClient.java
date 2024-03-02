@@ -1,6 +1,6 @@
 package com.ivanfranchin.movieapi.client;
 
-import com.ivanfranchin.movieapi.property.OmdbApiProperties;
+import com.ivanfranchin.movieapi.properties.OmdbApiProperties;
 import com.ivanfranchin.movieapi.service.SecretsManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

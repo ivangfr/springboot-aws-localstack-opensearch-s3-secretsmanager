@@ -1,7 +1,7 @@
 package com.ivanfranchin.movieapi.service;
 
 import com.ivanfranchin.movieapi.exception.OpenSearchServiceException;
-import com.ivanfranchin.movieapi.property.AwsProperties;
+import com.ivanfranchin.movieapi.properties.AwsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.opensearch.action.get.GetRequest;

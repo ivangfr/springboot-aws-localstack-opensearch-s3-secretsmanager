@@ -1,4 +1,4 @@
-package com.ivanfranchin.movieapi.property;
+package com.ivanfranchin.movieui.properties;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -9,8 +9,8 @@ import org.springframework.validation.annotation.Validated;
 @Data
 @Validated
 @Configuration
-@ConfigurationProperties(prefix = "omdbapi")
-public class OmdbApiProperties {
+@ConfigurationProperties(prefix = "movie-api")
+public class MovieApiProperties {
 
     @NotBlank
     private String url;
