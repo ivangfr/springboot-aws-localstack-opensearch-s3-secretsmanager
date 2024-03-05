@@ -15,16 +15,10 @@ import org.springframework.validation.annotation.Validated;
 public class AwsProperties {
 
     @NotBlank
-    private String region;
-
-    @NotBlank
-    private String accessKey;
-
-    @NotBlank
-    private String secretAccessKey;
-
-    @NotBlank
     private String endpoint;
+
+    @NotBlank
+    private String region;
 
     @NotNull
     private OpenSearch opensearch;

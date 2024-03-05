@@ -14,4 +14,7 @@ public class OmdbApiProperties {
 
     @NotBlank
     private String url;
+
+    @NotBlank
+    private String apiKey;
 }

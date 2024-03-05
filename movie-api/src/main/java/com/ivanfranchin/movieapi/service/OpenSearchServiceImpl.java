@@ -55,7 +55,6 @@ public class OpenSearchServiceImpl implements OpenSearchService {
             }
             SearchRequest searchRequest = new SearchRequest(awsProperties.getOpensearch().getIndexes())
                     .source(searchSourceBuilder);
-            //log.info(searchRequest.source().toString());
             SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
             return searchResponse.getHits();
         } catch (Exception e) {

@@ -79,7 +79,7 @@ echo
 echo "Creating secrets in secretsmanager"
 echo "----------------------------------"
 
-docker exec -t localstack aws --endpoint-url=http://localhost:4566 secretsmanager create-secret --name omdbApiKey --secret-string $OMDB_API_KEY
+docker exec -t localstack aws --endpoint-url=http://localhost:4566 secretsmanager create-secret --name /secrets/omdbApi --secret-string "{\"apiKey\": \"$OMDB_API_KEY\"}"
 
 echo
 echo "----------------------------------------"

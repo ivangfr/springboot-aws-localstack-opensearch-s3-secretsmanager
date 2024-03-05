@@ -14,8 +14,9 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <opensearch-client.version>2.11.1</opensearch-client.version>
         <amazon-awssdk.version>2.25.0</amazon-awssdk.version>
+        <spring-cloud-aws.version>3.0.0</spring-cloud-aws.version>
+        <opensearch-client.version>2.11.1</opensearch-client.version>
         <springdoc-openapi.version>2.3.0</springdoc-openapi.version>
     </properties>
 
@@ -36,22 +37,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.awspring.cloud</groupId>
+            <artifactId>spring-cloud-aws-starter-s3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.awspring.cloud</groupId>
+            <artifactId>spring-cloud-aws-starter-secrets-manager</artifactId>
+        </dependency>
 
         <!-- OpenSearch -->
         <dependency>
             <groupId>org.opensearch.client</groupId>
             <artifactId>opensearch-rest-high-level-client</artifactId>
             <version>${opensearch-client.version}</version>
-        </dependency>
-
-        <!-- AWS -->
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>secretsmanager</artifactId>
         </dependency>
 
         <!-- SpringDoc OpenApi -->
@@ -75,10 +74,18 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- To choose the AWS SDK version -->
             <dependency>
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>bom</artifactId>
                 <version>${amazon-awssdk.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.awspring.cloud</groupId>
+                <artifactId>spring-cloud-aws-dependencies</artifactId>
+                <version>${spring-cloud-aws.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
