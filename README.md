@@ -1,6 +1,6 @@
 # springboot-aws-localstack-opensearch-s3-secretsmanager
 
-In this project, we are going to use [`LocalStack`](https://localstack.cloud/) to simulate locally, some services provided by [`AWS Cloud`](https://aws.amazon.com/) such as [`OpenSearch`](https://aws.amazon.com/opensearch-service/), [`S3`](https://aws.amazon.com/s3/), and [`Secrets Manager`](https://aws.amazon.com/secrets-manager/). Also, in order to simplify the use of AWS managed services, we are going to use [`Spring Cloud AWS`](https://docs.awspring.io/spring-cloud-aws/docs/3.0.0/reference/html/index.html).
+In this project, we are going to use [`LocalStack`](https://localstack.cloud/) to simulate locally, some services provided by [`AWS Cloud`](https://aws.amazon.com/) such as [`OpenSearch`](https://aws.amazon.com/opensearch-service/), [`S3`](https://aws.amazon.com/s3/), and [`Secrets Manager`](https://aws.amazon.com/secrets-manager/). Also, in order to simplify the use of AWS managed services, we are going to use [`Spring Cloud AWS`](https://spring.io/projects/spring-cloud-aws).
 
 ## Proof-of-Concepts & Articles
 
