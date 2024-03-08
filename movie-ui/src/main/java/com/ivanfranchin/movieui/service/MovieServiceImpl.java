@@ -4,7 +4,9 @@ import com.ivanfranchin.movieui.client.MovieApiClient;
 import com.ivanfranchin.movieui.controller.SearchResponse;
 import com.ivanfranchin.movieui.mapper.MovieMapper;
 import com.ivanfranchin.movieui.model.Movie;
+import com.ivanfranchin.movieui.properties.MovieApiProperties;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -12,16 +14,24 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MovieServiceImpl implements MovieService {
 
     private final MovieApiClient movieApiClient;
     private final MovieMapper movieMapper;
+    private final MovieApiProperties movieApiProperties;
 
     @Override
     public Optional<Movie> getMovie(String imdb) {
-        return movieApiClient.getMovie(imdb);
+        try {
+            Movie movie = movieApiClient.getMovie(imdb);
+            return Optional.of(movie);
+        } catch (Exception e) {
+            log.error("An exception happened while getting movie imdb '{}' from movie-api. Error message: {}", imdb, e.getMessage());
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -31,7 +41,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> searchMovies(String title) {
-        return getMovieList(movieApiClient.searchMovies(title));
+        try {
+            return getMovieList(movieApiClient.searchMovies(title == null ? "" : title));
+        } catch (Exception e) {
+            log.error("An exception happened while searching for '{}' in movie-api. Error message: {}", title, e.getMessage());
+            return List.of();
+        }
     }
 
     private List<Movie> getMovieList(SearchResponse searchResponse) {

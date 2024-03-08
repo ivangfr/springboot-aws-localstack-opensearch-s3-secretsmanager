@@ -1,22 +1,12 @@
 package com.ivanfranchin.movieapi.client;
 
-import com.ivanfranchin.movieapi.properties.OmdbApiProperties;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.HttpExchange;
 
-@Slf4j
-@RequiredArgsConstructor
-@Component
-public class OmdbApiClient {
+@HttpExchange
+public interface OmdbApiClient {
 
-    private final RestTemplate restTemplate;
-    private final OmdbApiProperties omdbApiProperties;
-
-    public OmdbResponse getMovieByTitle(String title) {
-        String url = String.format("%s/?apikey=%s&t=%s",
-                omdbApiProperties.getUrl(), omdbApiProperties.getApiKey(), title);
-        return restTemplate.getForEntity(url, OmdbResponse.class).getBody();
-    }
+    @GetExchange
+    OmdbResponse getMovieByTitle(@RequestParam String apiKey, @RequestParam(name = "t") String title);
 }

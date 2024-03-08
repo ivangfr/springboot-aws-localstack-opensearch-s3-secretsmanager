@@ -1,11 +1,12 @@
 package com.ivanfranchin.movieapi.controller;
 
-import com.ivanfranchin.movieapi.mapper.MovieMapper;
-import com.ivanfranchin.movieapi.service.MovieService;
-import com.ivanfranchin.movieapi.service.PosterService;
 import com.ivanfranchin.movieapi.client.OmdbApiClient;
 import com.ivanfranchin.movieapi.client.OmdbResponse;
+import com.ivanfranchin.movieapi.mapper.MovieMapper;
 import com.ivanfranchin.movieapi.model.Movie;
+import com.ivanfranchin.movieapi.properties.OmdbApiProperties;
+import com.ivanfranchin.movieapi.service.MovieService;
+import com.ivanfranchin.movieapi.service.PosterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class MoviesUiController {
     private final PosterService posterService;
     private final MovieMapper movieMapper;
     private final OmdbApiClient omdbApiClient;
+    private final OmdbApiProperties omdbApiProperties;
 
     @GetMapping("/")
     public String getHome() {
@@ -64,7 +66,7 @@ public class MoviesUiController {
         }
         OmdbResponse omdbResponse;
         try {
-            omdbResponse = omdbApiClient.getMovieByTitle(searchRequest.getText());
+            omdbResponse = omdbApiClient.getMovieByTitle(omdbApiProperties.getApiKey(), searchRequest.getText());
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error",
                     String.format("An error occurred while searching for title containing '%s' in OMDb API! Error message: %s",
