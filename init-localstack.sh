@@ -58,14 +58,14 @@ echo "---------------------------"
 curl $AWS_LOCALSTACK_OPENSEARCH_URL
 
 echo
-echo "Deleting existing indexes"
-echo "-------------------------"
+echo "Deleting existing movies index"
+echo "------------------------------"
 curl -X DELETE $AWS_LOCALSTACK_OPENSEARCH_URL/movies
 echo
 
 echo
-echo "Creating movies index"
-echo "---------------------"
+echo "Creating new movies index"
+echo "-------------------------"
 curl -X PUT $AWS_LOCALSTACK_OPENSEARCH_URL/movies -H "Content-Type: application/json" -d @opensearch/movies-settings.json
 
 echo

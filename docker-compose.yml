@@ -17,7 +17,6 @@ services:
       - SERVICES=opensearch,s3,secretsmanager
       # ---
       - DEBUG=${DEBUG-}
-      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
     volumes:
       - "$PWD/tmp/localstack:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
