@@ -8,13 +8,13 @@ In this project, we are going to use [`LocalStack`](https://localstack.cloud/) t
 
 On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-Concepts (PoCs) and articles. You can easily search for the technology you are interested in by using the filter. Who knows, perhaps I have already implemented a PoC or written an article about what you are looking for.
 
-## Project Diagram
-
-![project-diagram](documentation/project-diagram.jpeg)
-
 ## Additional Readings
 
 - \[**Medium**\] [**Spring Boot apps to trigger and consume DynamoDB News table updates using AWS Lambda, SNS and SQS**](https://medium.com/@ivangfr/spring-boot-apps-to-trigger-and-consume-dynamodb-news-table-updates-using-aws-lambda-sns-and-sqs-957570cf9a3a)
+
+## Project Diagram
+
+![project-diagram](documentation/project-diagram.jpeg)
 
 ## Applications
 
