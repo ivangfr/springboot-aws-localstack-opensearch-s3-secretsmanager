@@ -14,6 +14,8 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - \[**Medium**\] [**Spring Boot apps to trigger and consume DynamoDB News table updates using AWS Lambda, SNS and SQS**](https://medium.com/@ivangfr/spring-boot-apps-to-trigger-and-consume-dynamodb-news-table-updates-using-aws-lambda-sns-and-sqs-957570cf9a3a)
 - \[**Medium**\] [**Implementing a Spring Boot App using AWS DynamoDB as database**](https://medium.com/@ivangfr/implementing-a-spring-boot-app-using-aws-dynamodb-as-database-5dbf8b7fc924)
 - \[**Medium**\] [**Implementing a Spring Boot App that uses AWS Secrets Manager to store its MongoDB credentials**](https://medium.com/@ivangfr/implementing-a-spring-boot-app-that-uses-aws-secrets-manager-to-store-its-mongodb-credentials-f805a4c74d9a)
+- \[**Medium**\] [**Implementing a Serverless AWS Lambda with Spring Cloud Function & AWS Adapter**](https://medium.com/@ivangfr/implementing-a-serverless-aws-lambda-with-spring-cloud-function-aws-adapter-05fd6d48ba45)
+- \[**Medium**\] [**Using AWS SNS and SQS to stream Alerts from a Spring Boot producer to consumers**](https://medium.com/@ivangfr/using-aws-sns-and-sqs-to-stream-alerts-from-a-spring-boot-producer-to-consumers-0b0a974e40fc)
 
 ## Project Diagram
 
