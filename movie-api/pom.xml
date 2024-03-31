@@ -14,10 +14,10 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <amazon-awssdk.version>2.25.0</amazon-awssdk.version>
-        <spring-cloud-aws.version>3.0.0</spring-cloud-aws.version>
+        <amazon-awssdk.version>2.25.21</amazon-awssdk.version>
+        <spring-cloud-aws.version>3.1.1</spring-cloud-aws.version>
         <opensearch-client.version>2.11.1</opensearch-client.version>
-        <springdoc-openapi.version>2.3.0</springdoc-openapi.version>
+        <springdoc-openapi.version>2.4.0</springdoc-openapi.version>
     </properties>
 
     <dependencies>
