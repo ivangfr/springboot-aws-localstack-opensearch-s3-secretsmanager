@@ -74,7 +74,7 @@ public class PosterServiceImpl implements PosterService {
         }
     }
 
-    private String uploadFile(String key, InputStream inputStream) throws IOException {
+    private String uploadFile(String key, InputStream inputStream) {
         String bucketName = awsProperties.getS3().getBucketName();
         s3Template.upload(bucketName, key, inputStream);
         String s3FileUrl = String.format("%s/%s/%s", awsProperties.getEndpoint(), bucketName, key);

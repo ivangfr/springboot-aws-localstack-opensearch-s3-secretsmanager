@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
@@ -105,8 +108,11 @@ public class OpenSearchServiceImpl implements OpenSearchService {
     private URL validateAndGetUrl(String url) {
         if (StringUtils.hasText(url)) {
             try {
-                return new URL(url);
-            } catch (Exception e) {
+                return new URI(url).toURL();
+            } catch (URISyntaxException e) {
+                log.error("Invalid URL syntax: {}", e.getMessage());
+            } catch (MalformedURLException e) {
+                log.error("Malformed URL: {}", e.getMessage());
             }
         }
         return null;
