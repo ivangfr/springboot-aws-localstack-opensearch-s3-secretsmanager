@@ -1,7 +1,7 @@
 package com.ivanfranchin.movieui.client;
 
-import com.ivanfranchin.movieui.controller.SearchResponse;
-import com.ivanfranchin.movieui.model.Movie;
+import com.ivanfranchin.movieui.movie.dto.SearchResponse;
+import com.ivanfranchin.movieui.movie.model.Movie;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;

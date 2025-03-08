@@ -1,8 +1,7 @@
 package com.ivanfranchin.movieapi.runner;
 
-import com.ivanfranchin.movieapi.service.PosterService;
-import com.ivanfranchin.movieapi.service.PosterServiceImpl;
-import com.ivanfranchin.movieapi.service.S3Service;
+import com.ivanfranchin.movieapi.aws.PosterService;
+import com.ivanfranchin.movieapi.aws.S3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -29,5 +28,5 @@ public class S3InitialUploadRunner implements CommandLineRunner {
     }
 
     private static final String IMAGES_FOLDER = "images";
-    private static final List<String> filesNames = List.of(PosterServiceImpl.NOT_AVAILABLE_POSTER);
+    private static final List<String> filesNames = List.of(com.ivanfranchin.movieapi.aws.PosterService.NOT_AVAILABLE_POSTER);
 }
