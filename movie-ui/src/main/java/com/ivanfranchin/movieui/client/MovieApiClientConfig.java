@@ -14,8 +14,8 @@ public class MovieApiClientConfig {
     private String movieApiUrl;
 
     @Bean
-    MovieApiClient movieApiClient() {
-        RestClient restClient = RestClient.builder().baseUrl(movieApiUrl).build();
+    MovieApiClient movieApiClient(RestClient.Builder builder) {
+        RestClient restClient = builder.baseUrl(movieApiUrl).build();
         RestClientAdapter adapter = RestClientAdapter.create(restClient);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
         return factory.createClient(MovieApiClient.class);
