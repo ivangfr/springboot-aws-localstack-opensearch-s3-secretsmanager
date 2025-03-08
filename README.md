@@ -1,8 +1,8 @@
 # springboot-aws-localstack-opensearch-s3-secretsmanager
 
-In this project, we are going to use [`LocalStack`](https://localstack.cloud/) to simulate locally, some services provided by [`AWS Cloud`](https://aws.amazon.com/) such as [`OpenSearch`](https://aws.amazon.com/opensearch-service/), [`S3`](https://aws.amazon.com/s3/), and [`Secrets Manager`](https://aws.amazon.com/secrets-manager/). Also, in order to simplify the use of AWS managed services, we are going to use [`Spring Cloud AWS`](https://spring.io/projects/spring-cloud-aws).
+In this project, we will use [`LocalStack`](https://localstack.cloud/) to locally simulate some services provided by [`AWS Cloud`](https://aws.amazon.com/) such as [`OpenSearch`](https://aws.amazon.com/opensearch-service/), [`S3`](https://aws.amazon.com/s3/), and [`Secrets Manager`](https://aws.amazon.com/secrets-manager/). Additionally, to simplify the use of AWS managed services, we will use [`Spring Cloud AWS`](https://spring.io/projects/spring-cloud-aws).
 
-> **Note**: Check out the [`springboot-aws-localstack-dynamodb-lambda-sns-sqs`](https://github.com/ivangfr/springboot-aws-localstack-dynamodb-lambda-sns-sqs) repository. In it, we've developed two Spring Boot applications for producing and listening to news updates. We also utilized LocalStack to locally simulate AWS Cloud services like [`DynamoDB`](https://aws.amazon.com/dynamodb/), [`Lambda`](https://aws.amazon.com/lambda/), [`SNS`](https://aws.amazon.com/sns/) and [`SQS`](https://aws.amazon.com/sqs/).
+> **Note**: Check out the [`springboot-aws-localstack-dynamodb-lambda-sns-sqs`](https://github.com/ivangfr/springboot-aws-localstack-dynamodb-lambda-sns-sqs) repository. In it, we have developed two Spring Boot applications for producing and listening to news updates. We also utilized LocalStack to locally simulate AWS Cloud services such as [`DynamoDB`](https://aws.amazon.com/dynamodb/), [`Lambda`](https://aws.amazon.com/lambda/), [`SNS`](https://aws.amazon.com/sns/) and [`SQS`](https://aws.amazon.com/sqs/).
 
 ## Proof-of-Concepts & Articles
 
@@ -34,9 +34,9 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   POST /api/movies/{imdb}/uploadPoster
   ```
 
-  The information of the movies, such as `imdb`, `title`, `year`, etc, are stored in `OpenSearch` that is hosted in `LocalStack`. The movie's `poster` are stored in `S3` buckets.
+  The information of the movies, such as `imdb`, `title`, `year`, etc, are stored in `OpenSearch` that is hosted in `LocalStack`. The movie's `poster` is stored in `S3` buckets.
 
-  The `movie-api` has access to [`OMDb API`](https://www.omdbapi.com/) to search and add easily new movies. In order to make request to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
+  The `movie-api` has access to [`OMDb API`](https://www.omdbapi.com/) to search and add easily new movies. To make requests to `OMDb API`, an `apiKey` is needed. This key is stored as a secret in `Secrets Manager`.
 
 - ### movie-ui
 
@@ -44,24 +44,24 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 ## Prerequisites
 
-- [`Java 21+`](https://www.oracle.com/java/technologies/downloads/#java21)
-- [`Docker`](https://www.docker.com/)
+- [`Java 21`](https://www.oracle.com/java/technologies/downloads/#java21) or higher;
+- A containerization tool (e.g., [`Docker`](https://www.docker.com), [`Podman`](https://podman.io), etc.)
 - [`OMDb API`](https://www.omdbapi.com/) KEY
 
-  To search movies in `OMDb API`, we need to obtain an API KEY from `OMDb API`. In order to do it, access https://www.omdbapi.com/apikey.aspx and follow the steps provided by the website.
+  To search for movies in `OMDb API`, we need to obtain an API KEY from `OMDb API`. To do it, access https://www.omdbapi.com/apikey.aspx and follow the steps provided by the website.
 
 ## Start and Initialize LocalStack
 
-- In a terminal, make sure you are in inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder
+- In a terminal, make sure you are inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder
 
 - Start `LocalStack` Docker container
   ```
   DEBUG=1 docker compose up -d
   ```
 
-- \[Optional\] Debug logs are enabled so that we have more insights about what is happening. To monitor `localstack` Docker container logs, run the command below
+- \[Optional\] Debug logs are enabled to provide more insights into what is happening. To monitor `localstack` Docker container logs, run the command below
   ```
-  docker logs localstack -f
+  docker logs localstack
   ```
 
 - Initialize `LocalStack` by running the following script
@@ -77,7 +77,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - **movie-api**
   
-  In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
+  In a terminal, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
   ```
   export AWS_REGION=eu-west-1 && export AWS_ACCESS_KEY_ID=key && export AWS_SECRET_ACCESS_KEY=secret && \
     ./mvnw clean spring-boot:run --projects movie-api
@@ -94,7 +94,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - ### Build Docker images
 
-  In a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following script
+  In a terminal, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following script
   ```
   ./docker-build.sh
   ```
@@ -156,7 +156,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 ## Shutdown
 
 - To stop the applications, go to the terminal where they are running and press `Ctrl+C`
-- To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
+- To stop and remove Docker Compose containers, network, and volumes, go to a terminal and, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command
   ```
   docker compose down -v
   ```
