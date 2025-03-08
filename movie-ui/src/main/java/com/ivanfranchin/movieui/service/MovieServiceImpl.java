@@ -2,9 +2,7 @@ package com.ivanfranchin.movieui.service;
 
 import com.ivanfranchin.movieui.client.MovieApiClient;
 import com.ivanfranchin.movieui.controller.SearchResponse;
-import com.ivanfranchin.movieui.mapper.MovieMapper;
 import com.ivanfranchin.movieui.model.Movie;
-import com.ivanfranchin.movieui.properties.MovieApiProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,8 +18,6 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieApiClient movieApiClient;
-    private final MovieMapper movieMapper;
-    private final MovieApiProperties movieApiProperties;
 
     @Override
     public Optional<Movie> getMovie(String imdb) {
@@ -56,7 +52,7 @@ public class MovieServiceImpl implements MovieService {
         return searchResponse.hits()
                 .stream()
                 .map(SearchResponse.Hit::source)
-                .map(movieMapper::toMovie)
+                .map(Movie::from)
                 .collect(Collectors.toList());
     }
 }

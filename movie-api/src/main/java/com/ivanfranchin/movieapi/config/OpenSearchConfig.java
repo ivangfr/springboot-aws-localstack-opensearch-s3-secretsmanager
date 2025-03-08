@@ -15,7 +15,7 @@ public class OpenSearchConfig {
     private final AwsProperties awsProperties;
 
     @Bean
-    public RestHighLevelClient restHighLevelClient() {
+    RestHighLevelClient restHighLevelClient() {
         return new RestHighLevelClient(
                 RestClient.builder(HttpHost.create(awsProperties.getEndpoint()))
                         .setPathPrefix(String.format("/opensearch/%s/%s",

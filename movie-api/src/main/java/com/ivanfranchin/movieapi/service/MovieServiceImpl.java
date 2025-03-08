@@ -1,7 +1,6 @@
 package com.ivanfranchin.movieapi.service;
 
 import com.ivanfranchin.movieapi.exception.MovieNotFoundException;
-import com.ivanfranchin.movieapi.mapper.MovieMapper;
 import com.ivanfranchin.movieapi.model.Movie;
 import com.ivanfranchin.movieapi.rest.dto.SearchResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +19,11 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
 
     private final OpenSearchService openSearchService;
-    private final MovieMapper movieMapper;
 
     @Override
     public Optional<Movie> getMovie(String imdb) {
         try {
-            return Optional.of(movieMapper.toMovie(openSearchService.getMovie(imdb)));
+            return Optional.of(Movie.from(openSearchService.getMovie(imdb)));
         } catch (Exception e) {
             return Optional.empty();
         }
@@ -45,7 +43,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public SearchResponse searchMovies(String title) {
         try {
-            return movieMapper.toSearchResponse(openSearchService.searchMovies(title));
+            return SearchResponse.from(openSearchService.searchMovies(title));
         } catch (Exception e) {
             return createSearchResponseError(e.getMessage());
         }
@@ -53,8 +51,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie saveMovie(Movie movie) {
-        Map<String, Object> movieMap = openSearchService.saveMovie(movieMapper.toMovieMap(movie));
-        return movieMapper.toMovie(movieMap);
+        Map<String, Object> movieMap = openSearchService.saveMovie(Movie.toMap(movie));
+        return Movie.from(movieMap);
     }
 
     private List<Movie> getMovieList(SearchResponse searchResponse) {
@@ -64,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
         return searchResponse.hits()
                 .stream()
                 .map(SearchResponse.Hit::source)
-                .map(movieMapper::toMovie)
+                .map(Movie::from)
                 .collect(Collectors.toList());
     }
 

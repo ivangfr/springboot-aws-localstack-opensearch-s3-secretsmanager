@@ -1,6 +1,5 @@
 package com.ivanfranchin.movieapi.rest;
 
-import com.ivanfranchin.movieapi.mapper.MovieMapper;
 import com.ivanfranchin.movieapi.model.Movie;
 import com.ivanfranchin.movieapi.rest.dto.AddMovieRequest;
 import com.ivanfranchin.movieapi.rest.dto.MovieResponse;
@@ -30,7 +29,6 @@ public class MovieController {
 
     private final MovieService movieService;
     private final PosterService posterService;
-    private final MovieMapper movieMapper;
 
     @GetMapping
     public SearchResponse searchMovie(@RequestParam(required = false) String title) {
@@ -42,15 +40,15 @@ public class MovieController {
     public MovieResponse getMovie(@PathVariable String imdb) {
         log.info("Search movie with imdb {}", imdb);
         Movie movie = movieService.validateAndGetMovie(imdb);
-        return movieMapper.toMovieResponse(movie);
+        return MovieResponse.from(movie);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public MovieResponse addMovie(@Valid @RequestBody AddMovieRequest addMovieRequest) {
         log.info("Add movie {}", addMovieRequest);
-        Movie movie = movieService.saveMovie(movieMapper.toMovie(addMovieRequest));
-        return movieMapper.toMovieResponse(movie);
+        Movie movie = movieService.saveMovie(Movie.from(addMovieRequest));
+        return MovieResponse.from(movie);
     }
 
     @PostMapping(value = "/{imdb}/uploadPoster", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

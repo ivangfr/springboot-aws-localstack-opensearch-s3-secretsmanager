@@ -2,7 +2,6 @@ package com.ivanfranchin.movieapi.controller;
 
 import com.ivanfranchin.movieapi.client.OmdbApiClient;
 import com.ivanfranchin.movieapi.client.OmdbResponse;
-import com.ivanfranchin.movieapi.mapper.MovieMapper;
 import com.ivanfranchin.movieapi.model.Movie;
 import com.ivanfranchin.movieapi.properties.OmdbApiProperties;
 import com.ivanfranchin.movieapi.service.MovieService;
@@ -30,7 +29,6 @@ public class MoviesUiController {
 
     private final MovieService movieService;
     private final PosterService posterService;
-    private final MovieMapper movieMapper;
     private final OmdbApiClient omdbApiClient;
     private final OmdbApiProperties omdbApiProperties;
 
@@ -108,7 +106,7 @@ public class MoviesUiController {
         if ("cancel".equals(action)) {
             return "redirect:/movies";
         }
-        Movie movie = movieMapper.toMovie(addOmdbResponse);
+        Movie movie = Movie.from(addOmdbResponse);
         try {
             movieService.saveMovie(movie);
             redirectAttributes.addFlashAttribute("message",

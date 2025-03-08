@@ -96,7 +96,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
   In a terminal, inside `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following script
   ```
-  ./docker-build.sh
+  ./build-docker-images.sh
   ```
 
 - ### Run Docker containers

@@ -15,7 +15,7 @@ public class OmdbApiClientConfig {
     private String omdbApiUrl;
 
     @Bean
-    public OmdbApiClient omdbApiClient() {
+    OmdbApiClient omdbApiClient() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setUriTemplateHandler(new DefaultUriBuilderFactory(omdbApiUrl));
         RestTemplateAdapter adapter = RestTemplateAdapter.create(restTemplate);
