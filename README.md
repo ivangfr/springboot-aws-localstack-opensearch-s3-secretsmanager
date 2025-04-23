@@ -28,7 +28,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   [`Spring Boot`](https://docs.spring.io/spring-boot/index.html) Java Web application that exposes a REST API and provides a UI for indexing movies.
 
   It has the following endpoints:
-  ```
+  ```text
    GET /api/movies/{imdb}
   POST /api/movies {"imdb":"...", "title":"...", "posterUrl":"...", "year":"...", "released":"...", "imdbRating":"...", "genre":"...", "runtime":"...", "director":"...", "writer":"...", "actors":"...", "plot":"...", "language":"...", "country":"...", "awards":"..."}
   POST /api/movies/{imdb}/uploadPoster
@@ -55,17 +55,17 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - In a terminal, make sure you are inside the `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder;
 
 - Start `LocalStack` Docker container:
-  ```
+  ```bash
   DEBUG=1 docker compose up -d
   ```
 
 - \[Optional\] Debug logs are enabled to provide more insights into what is happening. To monitor `localstack` Docker container logs, run the command below:
-  ```
+  ```bash
   docker logs localstack
   ```
 
 - Initialize `LocalStack` by running the following script:
-  ```
+  ```bash
   ./init-localstack.sh <OMDB_API_KEY>
   ```
   The script requires `OMDB_API_KEY` as first and unique argument. The script will create:
@@ -78,7 +78,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - **movie-api**
   
   In a terminal, inside the `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command:
-  ```
+  ```bash
   export AWS_REGION=eu-west-1 && export AWS_ACCESS_KEY_ID=key && export AWS_SECRET_ACCESS_KEY=secret && \
     ./mvnw clean spring-boot:run --projects movie-api
   ```
@@ -86,7 +86,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - **movie-ui**
 
   In another terminal and, inside the `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the command below:
-  ```
+  ```bash
   ./mvnw clean spring-boot:run --projects movie-ui
   ```
 
@@ -95,7 +95,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - ### Build Docker images
 
   In a terminal, inside the `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following script:
-  ```
+  ```bash
   ./build-docker-images.sh
   ```
 
@@ -104,7 +104,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   - **movie-api**
     
     In a terminal, run the following command:
-    ```
+    ```bash
     docker run --rm --name movie-api -p 9080:9080 \
       -e AWS_REGION=eu-west-1 -e AWS_ACCESS_KEY_ID=key -e AWS_SECRET_ACCESS_KEY=secret \
       --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
@@ -114,7 +114,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
   - **movie-ui**
 
     In another terminal, run the command below:
-    ```
+    ```bash
     docker run --rm --name movie-ui -p 9081:9081 \
       -e MOVIE_API_URL=http://movie-api:9080 \
       --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
@@ -144,12 +144,12 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 - **OpenSearch**
 
   Check indexes
-  ```
+  ```bash
   curl "http://localhost.localstack.cloud:4566/opensearch/eu-west-1/my-domain/_cat/indices?v"
   ```
   
   Simple search
-  ```
+  ```bash
   curl "http://localhost.localstack.cloud:4566/opensearch/eu-west-1/my-domain/movies/_search?pretty"
   ```
 
@@ -157,13 +157,13 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
 
 - To stop the applications, go to the terminal where they are running and press `Ctrl+C`;
 - To stop and remove Docker Compose containers, network, and volumes, go to a terminal and, inside the `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the following command:
-  ```
+  ```bash
   docker compose down -v
   ```
 
 ## Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-aws-localstack-opensearch-s3-secretsmanager` root folder, run the script below:
-```
+```bash
 ./remove-docker-images.sh
 ```
