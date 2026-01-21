@@ -107,6 +107,7 @@ On [ivangfr.github.io](https://ivangfr.github.io), I have compiled my Proof-of-C
     ```bash
     docker run --rm --name movie-api -p 9080:9080 \
       -e AWS_REGION=eu-west-1 -e AWS_ACCESS_KEY_ID=key -e AWS_SECRET_ACCESS_KEY=secret \
+      -e APP_TMPFOLDER=/tmp \
       --network=springboot-aws-localstack-opensearch-s3-secretsmanager_default \
       ivanfranchin/movie-api:1.0.0
     ```

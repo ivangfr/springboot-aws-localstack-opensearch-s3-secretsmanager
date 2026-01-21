@@ -4,6 +4,7 @@ import com.ivanfranchin.movieapi.movie.exception.PosterUploaderException;
 import io.awspring.cloud.s3.S3Template;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,15 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +29,9 @@ public class PosterService {
     private final S3Template s3Template;
     private final AwsProperties awsProperties;
 
+    @Value("${app.tmpFolder:tmp}")
+    private String tmpFolder;
+
     public String getPosterNotAvailableUrl() {
         return String.format("%s/%s/%s",
                 awsProperties.getEndpoint(), awsProperties.getS3().getBucketName(), NOT_AVAILABLE_POSTER);
@@ -37,16 +39,16 @@ public class PosterService {
 
     public Optional<String> downloadFile(URL fileUrl, String fileName) {
         try {
-            Files.createDirectories(Paths.get(TMP_FOLDER));
-            String filePath = String.format("%s/%s.jpg", TMP_FOLDER, fileName);
-            try (ReadableByteChannel readableByteChannel = Channels.newChannel(fileUrl.openStream());
-                 FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-                 FileChannel fileChannel = fileOutputStream.getChannel()) {
-                fileChannel.transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                return Optional.of(filePath);
+            Path baseDir = Paths.get(tmpFolder);
+            Files.createDirectories(baseDir);
+            Path targetPath = baseDir.resolve(fileName + ".jpg").normalize();
+            log.info("Downloading file from URL '{}' to '{}'", fileUrl, targetPath);
+            try (InputStream in = fileUrl.openStream()) {
+                Files.copy(in, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                return Optional.of(targetPath.toString());
             }
         } catch (IOException e) {
-            log.error("Unable to download file from URL '{}'. Error message: {}", fileUrl, e.getMessage());
+            log.error("Failed to download file from {}. Error: {}", fileUrl, e.getMessage());
             return Optional.empty();
         }
     }
@@ -77,7 +79,6 @@ public class PosterService {
         return s3FileUrl;
     }
 
-    private static final String TMP_FOLDER = "tmp/posters";
     public static final String NOT_AVAILABLE_POSTER = "not-available.jpg";
     public static final File NOT_AVAILABLE_POSTER_FILE;
 
